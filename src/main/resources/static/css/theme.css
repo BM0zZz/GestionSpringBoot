@@ -1,0 +1,215 @@
+/* =========================
+   TEMA CLARO
+========================= */
+
+/* Colores base del body en modo claro */
+body.light-theme {
+  background-color: #f4f7fb;
+  color: #111827;
+}
+
+/* Fondo general layout */
+body.light-theme .layout {
+  background-color: #f4f7fb;
+}
+
+/* SIDEBAR */
+
+/* Sidebar claro */
+body.light-theme .sidebar {
+  background-color: #ffffff;
+  border-right: 1px solid #dbe3ee;
+}
+
+/* Punto interior logo */
+body.light-theme .logo-circle::after {
+  background-color: #ffffff;
+}
+
+/* Textos principales en modo claro */
+body.light-theme .logo-box h2,
+body.light-theme .user-card h4,
+body.light-theme .panel-header h2,
+body.light-theme .topbar h1,
+body.light-theme .detail-topbar h1,
+body.light-theme .detail-grid .panel h2,
+body.light-theme .detail-grid .panel h3,
+body.light-theme .stat-info h3,
+body.light-theme th,
+body.light-theme td,
+body.light-theme .summary-item h4,
+body.light-theme .detail-info-card h3,
+body.light-theme .meta-item strong,
+body.light-theme .timeline-item h4,
+body.light-theme .notification-option-left span,
+body.light-theme .config-summary-grid h4 {
+  color: #111827;
+}
+
+/* Textos secundarios */
+body.light-theme .logo-box p,
+body.light-theme .user-card p,
+body.light-theme .panel-header p,
+body.light-theme .topbar p,
+body.light-theme .detail-subtitle,
+body.light-theme .breadcrumb,
+body.light-theme .summary-item p,
+body.light-theme .detail-description-box p,
+body.light-theme .timeline-item span,
+body.light-theme .timeline-item p,
+body.light-theme .notes-box p,
+body.light-theme .detail-info-card span,
+body.light-theme .meta-item span,
+body.light-theme .notification-option small,
+body.light-theme .config-summary-grid p {
+  color: #6b7280;
+}
+
+/* Links menú */
+body.light-theme .nav-item {
+  color: #1f2937;
+}
+
+/* Hover menú */
+body.light-theme .nav-item:hover {
+  background-color: #eef2f7;
+  color: #111827;
+}
+
+/* Activo */
+body.light-theme .nav-item.active {
+  color: #ffffff;
+}
+
+/* MAIN */
+
+/* Fondo contenido principal */
+body.light-theme .main-content {
+  background-color: #f4f7fb;
+}
+
+/* PANELS Y CARDS */
+
+/* Paneles y tarjetas */
+body.light-theme .panel,
+body.light-theme .stat-card {
+  background: #ffffff;
+  border: 1px solid #dbe3ee;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+/* Elementos secundarios */
+body.light-theme .user-card,
+body.light-theme .detail-info-card,
+body.light-theme .detail-description-box,
+body.light-theme .meta-item,
+body.light-theme .summary-item,
+body.light-theme .notes-box,
+body.light-theme .notification-option,
+body.light-theme .config-summary-grid .summary-item {
+  background-color: #f8fafc;
+  border: 1px solid #dbe3ee;
+}
+
+/* Hover tarjetas */
+body.light-theme .summary-item:hover,
+body.light-theme .notification-option:hover,
+body.light-theme .config-summary-grid .summary-item:hover {
+  background-color: #f1f5f9;
+}
+
+/* TABLAS */
+
+/* Cabecera tabla */
+body.light-theme thead {
+  background-color: #eef2f7;
+}
+
+/* Bordes tabla */
+body.light-theme th,
+body.light-theme td {
+  border-bottom: 1px solid #e5eaf2;
+}
+
+/* Hover filas */
+body.light-theme tbody tr:hover,
+body.light-theme .clickable-row:hover {
+  background-color: #f8fafc !important;
+}
+
+/* INPUTS */
+
+/* Inputs modo claro */
+body.light-theme .search-input,
+body.light-theme .filters input,
+body.light-theme .filters select,
+body.light-theme .status-change-box select,
+body.light-theme form input,
+body.light-theme form select,
+body.light-theme form textarea,
+body.light-theme .config-field-block input,
+body.light-theme .config-field-block select {
+  background-color: #ffffff;
+  color: #111827;
+  border: 1px solid #cfd8e3;
+}
+
+/* Placeholder */
+body.light-theme .search-input::placeholder,
+body.light-theme form input::placeholder,
+body.light-theme form textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* Focus inputs */
+body.light-theme .search-input:focus,
+body.light-theme .filters input:focus,
+body.light-theme .filters select:focus,
+body.light-theme .status-change-box select:focus,
+body.light-theme form input:focus,
+body.light-theme form select:focus,
+body.light-theme form textarea:focus,
+body.light-theme .config-field-block input:focus,
+body.light-theme .config-field-block select:focus {
+  border-color: #7c5cff;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.12);
+}
+
+/* Labels */
+body.light-theme form label,
+body.light-theme .config-field-block label,
+body.light-theme .status-change-box label {
+  color: #374151;
+}
+
+/* BREADCRUMB */
+
+/* Links breadcrumb */
+body.light-theme .breadcrumb a {
+  color: #6d4aff;
+}
+
+/* TIMELINE */
+
+/* Línea timeline */
+body.light-theme .timeline-item {
+  border-left: 2px solid #dbe3ee;
+}
+
+/* SCROLL */
+
+/* Fondo scroll */
+body.light-theme ::-webkit-scrollbar-track {
+  background: #f4f7fb;
+}
+
+/* Barra scroll */
+body.light-theme ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+
+/* Hover scroll */
+body.light-theme ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Productos - ViniloTFG Admin</title>
+
+  <!-- Hojas de estilo generales, del dashboard y del tema -->
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+
+  <!-- Contenido principal -->
+  <main class="main-content">
+
+    <!-- Cabecera de la sección -->
+    <header class="topbar">
+      <div>
+        <h1>Gestión de productos</h1>
+        <p>Consulta, filtra y revisa el catálogo de vinilos</p>
+      </div>
+    </header>
+
+    <!-- Tarjetas con estadísticas rápidas del catálogo -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Productos totales</p>
+          <h3 id="totalProductos"></h3>
+          <span>Catálogo actual</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Stock bajo</p>
+          <h3 id="stockBajo"></h3>
+          <span>Menos de 5 unidades</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Sin stock</p>
+          <h3 id="sinStock"></h3>
+          <span>Productos agotados</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Valor inventario</p>
+          <h3 id="valorInventario"></h3>
+          <span>Suma estimada</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel principal con el listado de productos -->
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <h2>Listado de productos</h2>
+          <p>Haz clic en un producto para ver su detalle</p>
+        </div>
+      </div>
+
+      <!-- Filtros para buscar y clasificar productos -->
+      <div class="filters">
+        <input type="text" id="searchProduct" placeholder="Buscar por nombre, artista o SKU...">
+
+        <select id="productStatusFilter">
+          <option value="all">Todos los estados</option>
+          <option value="Disponible">Disponible</option>
+          <option value="Stock bajo">Stock bajo</option>
+          <option value="Agotado">Agotado</option>
+        </select>
+      </div>
+
+      <!-- Tabla donde se cargarán los productos dinámicamente -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>SKU</th>
+              <th>Producto</th>
+              <th>Artista</th>
+              <th>Género</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<!-- Script compartido y lógica específica de productos -->
+<script src="/js/shared.js"></script>
+<script src="/js/productos.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalle producto - ViniloTFG Admin</title>
+
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/incidencia.css">
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+  <main class="main-content">
+
+    <div id="productContent" style="display:none;">
+      <div class="detail-topbar">
+        <div>
+          <p class="breadcrumb">
+            <a href="/">Dashboard</a> / <a href="/productos">Productos</a> / Detalle
+          </p>
+          <h1 id="productTitle"></h1>
+        </div>
+
+        <div class="detail-actions-bar">
+          <div class="status-change-box">
+            <label for="stockInput">Cambiar stock</label>
+            <input type="number" id="stockInput" min="0">
+          </div>
+
+          <button class="secondary-btn" type="button" onclick="guardarStockProducto()">
+            Guardar stock
+          </button>
+
+          <button class="primary-btn" type="button" onclick="window.location.href='/productos'">
+            ← Volver
+          </button>
+        </div>
+      </div>
+
+      <div class="detail-grid">
+
+        <div class="panel">
+          <h2>Información del producto</h2>
+
+          <div class="detail-info-grid">
+            <div class="detail-info-card">
+              <span>SKU</span>
+              <h3 id="detailProductSku"></h3>
+            </div>
+
+            <div class="detail-info-card">
+              <span>Producto</span>
+              <h3 id="detailProductNombre"></h3>
+            </div>
+
+            <div class="detail-info-card">
+              <span>Artista</span>
+              <h3 id="detailProductArtista"></h3>
+            </div>
+
+            <div class="detail-info-card">
+              <span>Género</span>
+              <h3 id="detailProductGenero"></h3>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Descripción</h3>
+            <p id="detailProductDescripcion"></p>
+          </div>
+
+          <div class="detail-meta-row">
+            <div class="meta-item">
+              <span>Precio</span>
+              <strong id="detailProductPrecio"></strong>
+            </div>
+
+            <div class="meta-item">
+              <span>Stock</span>
+              <strong id="detailProductStock"></strong>
+            </div>
+
+            <div class="meta-item" id="productStatusBox">
+              <span>Estado</span>
+            </div>
+
+            <div class="meta-item">
+              <span>Última actualización</span>
+              <strong id="detailProductFecha"></strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Historial de stock</h2>
+          <div id="productTimelineContainer"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="noProductMessage" class="panel" style="display:none; max-width:700px;">
+      <h2 style="margin-bottom:10px;">No hay ningún producto seleccionado</h2>
+      <p style="color:#a1a7b3; line-height:1.6; margin-bottom:20px;">
+        Para ver el detalle de un producto, vuelve al listado y haz clic sobre uno de la tabla.
+      </p>
+      <button class="primary-btn" type="button" onclick="window.location.href='/productos'">
+        Ir a productos
+      </button>
+    </div>
+
+  </main>
+
+</div>
+
+<script src="/js/shared.js"></script>
+<script src="/js/productos.js"></script>
+
+</body>
+</html>

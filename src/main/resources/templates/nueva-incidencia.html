@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Nueva incidencia</title>
+
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+  <main class="main-content">
+
+    <div class="panel-header">
+      <div>
+        <h1>Nueva incidencia</h1>
+        <p>Registra una nueva incidencia en el sistema</p>
+      </div>
+    </div>
+
+    <div class="panel">
+
+      <form id="formIncidencia">
+
+        <div class="form-grid">
+
+          <div>
+            <label>Cliente</label>
+            <input type="text" id="cliente" required>
+          </div>
+
+          <div>
+            <label>Pedido</label>
+            <input type="text" id="pedido" required>
+          </div>
+
+          <div>
+            <label>Tipo</label>
+            <input type="text" id="tipo" required>
+          </div>
+
+          <div>
+            <label>Prioridad</label>
+            <select id="prioridad">
+              <option>Baja</option>
+              <option>Media</option>
+              <option>Alta</option>
+              <option>Urgente</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div style="margin-top:20px;">
+          <label>Descripción</label>
+          <textarea id="descripcion" rows="5" required></textarea>
+        </div>
+
+        <div style="margin-top:20px;">
+          <label>Responsable</label>
+          <input type="text" id="responsable">
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="primary-btn">Guardar incidencia</button>
+          <button type="button" class="secondary-btn" onclick="window.location.href='/'">
+            Cancelar
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </main>
+
+</div>
+
+<script src="/js/shared.js"></script>
+<script src="/js/incidencias.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalle pedido - ViniloTFG Admin</title>
+
+  <!-- Hojas de estilo generales, del detalle y del tema -->
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/incidencia.css">
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+  <!-- Contenido principal -->
+  <main class="main-content">
+
+    <!-- Contenedor principal del detalle, visible solo si hay pedido seleccionado -->
+    <div id="orderContent" style="display:none;">
+      <div class="detail-topbar">
+        <div>
+          <p class="breadcrumb">
+            <a href="/">Dashboard</a> / <a href="/pedidos">Pedidos</a> / Detalle
+          </p>
+          <h1 id="orderTitle"></h1>
+        </div>
+
+        <!-- Acciones rápidas para actualizar estado o volver -->
+        <div class="detail-actions-bar">
+          <div class="status-change-box">
+            <label for="pedidoEstadoSelect">Cambiar estado</label>
+            <select id="pedidoEstadoSelect">
+              <option value="Pendiente">Pendiente</option>
+              <option value="Pagado">Pagado</option>
+              <option value="Enviado">Enviado</option>
+              <option value="Entregado">Entregado</option>
+              <option value="Cancelado">Cancelado</option>
+            </select>
+          </div>
+
+          <button class="secondary-btn" type="button" onclick="guardarEstadoPedido()">
+            Guardar estado
+          </button>
+
+          <button class="primary-btn" type="button" onclick="window.location.href='/pedidos'">
+            ← Volver
+          </button>
+        </div>
+      </div>
+
+      <!-- Estructura principal del detalle -->
+      <div class="detail-grid">
+
+        <!-- Panel con la información general del pedido -->
+        <div class="panel">
+          <h2>Información del pedido</h2>
+
+          <!-- Datos principales del pedido -->
+          <div class="detail-info-grid">
+            <div class="detail-info-card">
+              <span>ID Pedido</span>
+              <h3 id="detailOrderId"></h3>
+            </div>
+
+            <div class="detail-info-card">
+              <span>Cliente</span>
+              <h3 id="detailOrderCliente"></h3>
+            </div>
+
+            <div class="detail-info-card">
+              <span>Fecha</span>
+              <h3 id="detailOrderFecha"></h3>
+            </div>
+
+            <div class="detail-info-card">
+              <span>Total</span>
+              <h3 id="detailOrderTotal"></h3>
+            </div>
+          </div>
+
+          <!-- Listado de productos incluidos en el pedido -->
+          <div class="panel">
+            <h3>Productos del pedido</h3>
+            <div id="orderProductsList"></div>
+          </div>
+
+          <!-- Información complementaria -->
+          <div class="detail-meta-row">
+            <div class="meta-item" id="pedidoEstadoBox">
+              <span>Estado</span>
+            </div>
+
+            <div class="meta-item">
+              <span>Dirección</span>
+              <strong id="detailOrderDireccion"></strong>
+            </div>
+
+            <div class="meta-item">
+              <span>Método de pago</span>
+              <strong id="detailOrderPago"></strong>
+            </div>
+
+            <div class="meta-item">
+              <span>Incidencia asociada</span>
+              <strong id="detailOrderIncidencia"></strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel con el historial del pedido -->
+        <div class="panel">
+          <h2>Historial</h2>
+          <div id="orderTimelineContainer"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mensaje alternativo cuando no hay pedido seleccionado -->
+    <div id="noOrderMessage" class="panel" style="display:none; max-width:700px;">
+      <h2 style="margin-bottom: 10px;">No hay ningún pedido seleccionado</h2>
+      <p style="color:#a1a7b3; line-height:1.6; margin-bottom:20px;">
+        Para ver el detalle de un pedido, vuelve al listado y haz clic sobre uno de la tabla.
+      </p>
+      <button class="primary-btn" type="button" onclick="window.location.href='/pedidos'">
+        Ir a pedidos
+      </button>
+    </div>
+
+  </main>
+
+</div>
+
+<!-- Script compartido y lógica específica de pedidos -->
+<script src="/js/shared.js"></script>
+<script src="/js/pedidos.js"></script>
+
+</body>
+</html>

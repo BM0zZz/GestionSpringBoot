@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ViniloTFG Admin - Incidencias</title>
+
+  <!-- Hojas de estilo principales del sistema -->
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+<body>
+  <div class="layout">
+    
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+      
+      <!-- Cabecera del dashboard -->
+      <header class="topbar">
+        <div>
+          <h1>Dashboard de incidencias</h1>
+          <p>Resumen general de pedidos, incidencias y actividad reciente</p>
+        </div>
+
+        <!-- Acción principal para crear una nueva incidencia -->
+        <div class="topbar-actions">
+          <button class="primary-btn" onclick="window.location.href='/nueva-incidencia'">
+                + Nueva incidencia
+        </button>
+        </div>
+      </header>
+
+      <!-- Tarjetas con resumen rápido de métricas -->
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-info">
+            <p>Pedidos totales</p>
+            <h3>1.248</h3>
+            <span>+12% este mes</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <p>Pedidos pendientes</p>
+            <h3>34</h3>
+            <span>5 requieren revisión</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <p>Incidencias abiertas</p>
+            <h3>18</h3>
+            <span>4 son urgentes</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <p>Clientes activos</p>
+            <h3>392</h3>
+            <span>+27 esta semana</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- BLOQUE DE GESTIÓN DE INCIDENCIAS -->
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Gestión de incidencias</h2>
+            <p>Consulta, filtra y revisa las incidencias registradas</p>
+          </div>
+        </div>
+
+        <!-- Filtros para buscar y clasificar incidencias -->
+        <div class="filters">
+          <input type="text" id="searchIncident" placeholder="Buscar por cliente o ID..." />
+          
+          <select id="statusFilter">
+            <option value="all">Todos los estados</option>
+            <option value="Abierta">Abierta</option>
+            <option value="En revisión">En revisión</option>
+            <option value="Resuelta">Resuelta</option>
+            <option value="Cerrada">Cerrada</option>
+          </select>
+
+          <select id="priorityFilter">
+            <option value="all">Todas las prioridades</option>
+            <option value="Baja">Baja</option>
+            <option value="Media">Media</option>
+            <option value="Alta">Alta</option>
+            <option value="Urgente">Urgente</option>
+          </select>
+        </div>
+
+        <!-- Tabla donde se cargan las incidencias dinámicamente -->
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Pedido</th>
+                <th>Tipo</th>
+                <th>Prioridad</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+              </tr>
+            </thead>
+            <tbody id="incidentTableBody">
+              <!-- Contenido generado por JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- BLOQUE DE PEDIDOS RECIENTES Y RESUMEN -->
+      <section class="bottom-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Pedidos recientes</h2>
+              <p>Últimos pedidos registrados en la tienda</p>
+            </div>
+          </div>
+
+          <!-- Tabla con los últimos pedidos -->
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID Pedido</th>
+                  <th>Cliente</th>
+                  <th>Fecha</th>
+                  <th>Total</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody">
+                <!-- Contenido generado por JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Panel de resumen rápido del sistema -->
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Resumen rápido</h2>
+              <p>Estado general de la operativa</p>
+            </div>
+          </div>
+
+          <div class="summary-boxes">
+            <div class="summary-item">
+              <h4>Incidencias urgentes</h4>
+              <p>4 casos pendientes de resolución inmediata.</p>
+            </div>
+
+            <div class="summary-item">
+              <h4>Pedidos con retraso</h4>
+              <p>7 envíos muestran demoras superiores a 48 horas.</p>
+            </div>
+
+            <div class="summary-item">
+              <h4>Devoluciones activas</h4>
+              <p>3 solicitudes siguen en proceso de validación.</p>
+            </div>
+
+            <div class="summary-item">
+              <h4>Clientes con incidencias repetidas</h4>
+              <p>2 usuarios han abierto más de una incidencia esta semana.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Scripts compartidos y específicos del dashboard -->
+  <script src="/js/shared.js"></script>
+  <script src="/js/incidencias.js"></script>
+  <script src="/js/pedidos.js"></script>
+</body>
+</html>

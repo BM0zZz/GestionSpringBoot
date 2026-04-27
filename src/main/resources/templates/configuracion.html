@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Configuración - ViniloTFG Admin</title>
+
+  <!-- Hojas de estilo generales, del dashboard, específicas de configuración y del tema -->
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/configuracion.css">
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+  <!-- Contenido principal de la página -->
+  <main class="main-content">
+
+    <!-- Cabecera de la sección -->
+    <header class="topbar">
+      <div>
+        <h1>Configuración del sistema</h1>
+        <p>Gestiona tus preferencias, notificaciones y ajustes generales del panel</p>
+      </div>
+    </header>
+
+    <!-- Tarjetas resumen con el estado actual de la configuración -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Usuario actual</p>
+          <h3 id="configUserName">Víctor</h3>
+          <span>Administrador principal</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Tema del panel</p>
+          <h3 id="configThemeLabel">Oscuro</h3>
+          <span>Configuración activa</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Notificaciones</p>
+          <h3 id="configNotificationLabel">Activadas</h3>
+          <span>Estado actual</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Seguridad</p>
+          <h3>Alta</h3>
+          <span>Protección del acceso</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bloque con formularios de perfil y preferencias -->
+    <section class="bottom-grid">
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Perfil del administrador</h2>
+            <p>Información principal del usuario del panel</p>
+          </div>
+        </div>
+
+        <!-- Formulario para actualizar los datos del perfil -->
+        <form id="profileForm">
+          <div class="form-grid">
+            <div>
+              <label for="adminName">Nombre</label>
+              <input type="text" id="adminName" placeholder="Nombre del administrador">
+            </div>
+
+            <div>
+              <label for="adminEmail">Correo electrónico</label>
+              <input type="email" id="adminEmail" placeholder="Correo">
+            </div>
+          </div>
+
+          <div class="config-field-block">
+            <label for="adminRole">Cargo</label>
+            <input type="text" id="adminRole" placeholder="Rol en el sistema">
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="primary-btn">Guardar perfil</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Preferencias del panel</h2>
+            <p>Ajustes visuales y de uso del backoffice</p>
+          </div>
+        </div>
+
+        <!-- Formulario para modificar tema e idioma -->
+        <form id="preferencesForm">
+          <div class="config-field-block">
+            <label for="themeSelect">Tema</label>
+            <select id="themeSelect">
+              <option value="Oscuro">Oscuro</option>
+              <option value="Claro">Claro</option>
+            </select>
+          </div>
+
+          <div class="config-field-block">
+            <label for="languageSelect">Idioma</label>
+            <select id="languageSelect">
+              <option value="Español">Español</option>
+              <option value="Inglés">Inglés</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="primary-btn">Guardar preferencias</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Bloque con formularios de notificaciones y seguridad -->
+    <section class="bottom-grid">
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Notificaciones</h2>
+            <p>Decide qué avisos quieres recibir en el panel</p>
+          </div>
+        </div>
+
+        <!-- Formulario para activar o desactivar avisos -->
+        <form id="notificationsForm">
+          <div class="notifications-list">
+
+            <label class="notification-option">
+              <div class="notification-option-left">
+                <input type="checkbox" id="notifyIncidents">
+                <span>Avisar de nuevas incidencias</span>
+              </div>
+              <small>Recibe avisos cuando se registre una nueva incidencia.</small>
+            </label>
+
+            <label class="notification-option">
+              <div class="notification-option-left">
+                <input type="checkbox" id="notifyOrders">
+                <span>Avisar de nuevos pedidos</span>
+              </div>
+              <small>Recibe avisos cuando entre un nuevo pedido en la tienda.</small>
+            </label>
+
+            <label class="notification-option">
+              <div class="notification-option-left">
+                <input type="checkbox" id="notifyStock">
+                <span>Avisar de stock bajo</span>
+              </div>
+              <small>Recibe avisos cuando un producto baje del stock recomendado.</small>
+            </label>
+
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="primary-btn">Guardar notificaciones</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Seguridad</h2>
+            <p>Control básico del acceso y la sesión</p>
+          </div>
+        </div>
+
+        <!-- Formulario para actualizar la contraseña -->
+        <form id="securityForm">
+          <div class="config-field-block">
+            <label for="currentPassword">Contraseña actual</label>
+            <input type="password" id="currentPassword" placeholder="Introduce tu contraseña actual">
+          </div>
+
+          <div class="config-field-block">
+            <label for="newPassword">Nueva contraseña</label>
+            <input type="password" id="newPassword" placeholder="Nueva contraseña">
+          </div>
+
+          <div class="config-field-block">
+            <label for="repeatPassword">Repetir contraseña</label>
+            <input type="password" id="repeatPassword" placeholder="Repite la nueva contraseña">
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="primary-btn">Actualizar contraseña</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Resumen visual de los ajustes guardados -->
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <h2>Resumen de configuración</h2>
+          <p>Estado actual de los ajustes guardados</p>
+        </div>
+      </div>
+
+      <div class="config-summary-grid" id="configSummaryBoxes"></div>
+    </section>
+
+    <!-- BLOQUE DE SESIÓN (logout del usuario) -->
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <h2>Sesión</h2>
+          <p>Cerrar sesión del panel de administración</p>
+        </div>
+      </div>
+
+      <!-- Botón que elimina la sesión del localStorage y redirige al login -->
+      <div class="form-actions">
+        <button type="button" class="secondary-btn" onclick="logout()">
+          Cerrar sesión
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<!-- Scripts compartidos y lógica específica de configuración -->
+<script src="/js/shared.js"></script>
+<script src="/js/configuracion.js"></script>
+
+</body>
+</html>

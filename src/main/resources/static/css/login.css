@@ -1,0 +1,60 @@
+/* Contenedor principal centrado */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+
+  /* Fondo con degradados */
+  background:
+    radial-gradient(circle at top left, rgba(124, 92, 255, 0.16), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(90, 63, 224, 0.14), transparent 30%),
+    #111315;
+}
+
+/* Tarjeta del login */
+.login-card {
+  width: 100%;
+  max-width: 460px;
+  background: linear-gradient(180deg, #181b20 0%, #15181d 100%);
+  border: 1px solid #2a2f38;
+  border-radius: 24px;
+  padding: 34px 30px;
+}
+
+/* Logo + texto */
+.login-logo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+/* Formulario */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Inputs */
+.login-field input {
+  width: 100%;
+  background-color: #202632;
+  border: 1px solid #465066;
+  border-radius: 14px;
+  padding: 14px 16px;
+  color: #f3f4f6;
+}
+
+/* Error */
+.login-error {
+  min-height: 20px;
+  color: #f87171;
+}
+
+/* Botón */
+.login-btn {
+  width: 100%;
+}

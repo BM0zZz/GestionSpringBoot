@@ -1,0 +1,167 @@
+/* =========================
+   CONFIGURACIÓN - ESTILOS PROPIOS
+========================= */
+
+/* Estilo general de cada bloque de campo del formulario */
+.config-field-block {
+  margin-bottom: 20px;
+}
+
+/* Estilo de las etiquetas de los campos */
+.config-field-block label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #a1a7b3;
+}
+
+/* Apariencia de inputs y selects de configuración */
+.config-field-block input,
+.config-field-block select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #2a2f38;
+  background-color: #20242c;
+  color: #f3f4f6;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+/* Efecto visual al enfocar los campos */
+.config-field-block input:focus,
+.config-field-block select:focus {
+  border-color: #6c5ce7;
+  box-shadow: 0 0 0 1px #6c5ce7;
+}
+
+/* Distribución en dos columnas para formularios */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+/* =========================
+   NOTIFICACIONES
+========================= */
+
+/* Contenedor vertical de opciones de notificación */
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Tarjeta de cada opción de notificación */
+.notification-option {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #20242c;
+  border: 1px solid #2a2f38;
+  border-radius: 16px;
+  padding: 18px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* Cambio de color al pasar el ratón */
+.notification-option:hover {
+  background-color: #232832;
+}
+
+/* Alineación horizontal del checkbox y el texto principal */
+.notification-option-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Tamaño y cursor del checkbox */
+.notification-option-left input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Texto principal de cada opción */
+.notification-option-left span {
+  color: #f3f4f6;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Texto secundario explicativo */
+.notification-option small {
+  color: #a1a7b3;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* =========================
+   RESUMEN CONFIGURACIÓN
+========================= */
+
+/* Cuadrícula para mostrar el resumen de configuración */
+.config-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+/* Tarjetas individuales del resumen */
+.config-summary-grid .summary-item {
+  background-color: #20242c;
+  border: 1px solid #2a2f38;
+  border-radius: 16px;
+  padding: 18px;
+  transition: 0.2s ease;
+}
+
+/* Efecto hover sobre las tarjetas resumen */
+.config-summary-grid .summary-item:hover {
+  background-color: #232832;
+}
+
+/* Título de cada bloque del resumen */
+.config-summary-grid h4 {
+  font-size: 15px;
+  margin-bottom: 6px;
+  color: #f3f4f6;
+}
+
+/* Texto descriptivo de cada bloque */
+.config-summary-grid p {
+  font-size: 13px;
+  color: #a1a7b3;
+  line-height: 1.5;
+}
+
+/* =========================
+   BOTONES (AJUSTE FINO)
+========================= */
+
+/* Separación superior de los botones del formulario */
+.form-actions {
+  margin-top: 20px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+  /* En móvil, el formulario pasa a una sola columna */
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* El resumen también pasa a una sola columna */
+  .config-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+}

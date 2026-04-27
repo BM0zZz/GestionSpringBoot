@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalle incidencia</title>
+
+  <!-- Hojas de estilo -->
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/incidencia.css">
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+  <!-- Contenido principal -->
+  <main class="main-content">
+
+    <!-- Contenedor principal -->
+    <div id="incidentContent" style="display: none;">
+
+      <!-- Cabecera -->
+      <div class="detail-topbar">
+        <div>
+          <p class="breadcrumb">
+            <a href="/">Dashboard</a> / Incidencia
+          </p>
+          <h1 id="incidentTitle"></h1>
+        </div>
+
+        <!-- Acciones -->
+        <div class="detail-actions-bar">
+          <div class="status-change-box">
+            <label for="estadoSelect">Cambiar estado</label>
+            <select id="estadoSelect">
+              <option value="Abierta">Abierta</option>
+              <option value="En revisión">En revisión</option>
+              <option value="Resuelta">Resuelta</option>
+              <option value="Cerrada">Cerrada</option>
+            </select>
+          </div>
+
+          <button class="secondary-btn" type="button" onclick="guardarEstado()">
+            Guardar estado
+          </button>
+
+          <button class="primary-btn" type="button" onclick="window.location.href='/'">
+            ← Volver
+          </button>
+        </div>
+      </div>
+
+      <!-- Contenido -->
+      <div class="detail-grid">
+
+        <!-- Información -->
+        <div class="panel">
+          <h2>Información</h2>
+
+          <div class="detail-info-grid">
+            <div class="detail-info-card">
+              <span>ID</span>
+              <h3 id="detailId"></h3>
+            </div>
+
+            <div class="detail-info-card">
+              <span>Cliente</span>
+              <h3 id="detailCliente"></h3>
+            </div>
+
+            <div class="detail-info-card">
+              <span>Pedido</span>
+              <h3 id="detailPedido"></h3>
+            </div>
+
+            <div class="detail-info-card">
+              <span>Tipo</span>
+              <h3 id="detailTipo"></h3>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Descripción</h3>
+            <p id="detailDescripcion"></p>
+          </div>
+
+          <div class="detail-meta-row">
+            <div class="meta-item" id="priorityBox">
+              <span>Prioridad</span>
+            </div>
+
+            <div class="meta-item" id="statusBox">
+              <span>Estado</span>
+            </div>
+
+            <div class="meta-item">
+              <span>Fecha</span>
+              <strong id="detailFecha"></strong>
+            </div>
+
+            <div class="meta-item">
+              <span>Responsable</span>
+              <strong id="detailResponsable"></strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Historial -->
+        <div class="panel">
+          <h2>Historial</h2>
+          <div id="timelineContainer"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mensaje si no hay incidencia -->
+    <div id="noIncidentMessage" class="panel" style="display: none; max-width: 700px;">
+      <h2 style="margin-bottom: 10px;">No hay ninguna incidencia seleccionada</h2>
+      <p style="color:#a1a7b3; line-height:1.6; margin-bottom:20px;">
+        Para ver el detalle de una incidencia, vuelve al dashboard y haz clic sobre una incidencia de la tabla.
+      </p>
+      <button class="primary-btn" type="button" onclick="window.location.href='/'">
+        Ir al dashboard
+      </button>
+    </div>
+
+  </main>
+
+</div>
+
+<!-- Scripts -->
+<script src="/js/shared.js"></script>
+<script src="/js/incidencias.js"></script>
+
+</body>
+</html>

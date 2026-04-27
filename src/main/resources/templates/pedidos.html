@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Pedidos - ViniloTFG Admin</title>
+
+  <!-- Hojas de estilo generales, del dashboard y del tema -->
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+ <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+  <!-- Contenido principal -->
+  <main class="main-content">
+
+    <!-- Cabecera de la sección -->
+    <header class="topbar">
+      <div>
+        <h1>Gestión de pedidos</h1>
+        <p>Consulta, filtra y revisa los pedidos registrados en la tienda</p>
+      </div>
+    </header>
+
+    <!-- Tarjetas con estadísticas rápidas de pedidos -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Pedidos totales</p>
+          <h3>248</h3>
+          <span>+8 esta semana</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Pendientes</p>
+          <h3>17</h3>
+          <span>3 requieren revisión</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Enviados</p>
+          <h3>94</h3>
+          <span>Últimos 30 días</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Entregados</p>
+          <h3>131</h3>
+          <span>52,8% del total</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel principal con el listado de pedidos -->
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <h2>Listado de pedidos</h2>
+          <p>Haz clic en un pedido para ver su detalle</p>
+        </div>
+      </div>
+
+      <!-- Filtros para buscar y clasificar pedidos -->
+      <div class="filters">
+        <input type="text" id="searchOrder" placeholder="Buscar por cliente o ID pedido...">
+
+        <select id="orderStatusFilter">
+          <option value="all">Todos los estados</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="Pagado">Pagado</option>
+          <option value="Enviado">Enviado</option>
+          <option value="Entregado">Entregado</option>
+          <option value="Cancelado">Cancelado</option>
+        </select>
+      </div>
+
+      <!-- Tabla donde se cargarán los pedidos dinámicamente -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID Pedido</th>
+              <th>Cliente</th>
+              <th>Fecha</th>
+              <th>Total</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="ordersManagementTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<!-- Script compartido y lógica específica de pedidos -->
+<script src="/js/shared.js"></script>
+<script src="/js/pedidos.js"></script>
+
+</body>
+</html>

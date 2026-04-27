@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Estadísticas - ViniloTFG Admin</title>
+
+  <!-- Hojas de estilo generales, del dashboard y del tema -->
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+  <!-- Contenido principal -->
+  <main class="main-content">
+
+    <!-- Encabezado de la sección -->
+    <header class="topbar">
+      <div>
+        <h1>Estadísticas generales</h1>
+        <p>Resumen del estado actual de la tienda, pedidos, incidencias y catálogo</p>
+      </div>
+    </header>
+
+    <!-- Tarjetas con métricas principales -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Pedidos totales</p>
+          <h3 id="statsPedidosTotales"></h3>
+          <span id="statsPedidosResumen"></span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Incidencias abiertas</p>
+          <h3 id="statsIncidenciasAbiertas"></h3>
+          <span id="statsIncidenciasResumen"></span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Clientes registrados</p>
+          <h3 id="statsClientesTotales"></h3>
+          <span id="statsClientesResumen"></span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>Productos en catálogo</p>
+          <h3 id="statsProductosTotales"></h3>
+          <span id="statsProductosResumen"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bloque con resumen de estados de pedidos e incidencias -->
+    <section class="bottom-grid">
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Estado de pedidos</h2>
+            <p>Distribución actual por estado</p>
+          </div>
+        </div>
+
+        <!-- Contenedor donde se insertan dinámicamente los datos -->
+        <div class="summary-boxes" id="orderStatsBoxes"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Estado de incidencias</h2>
+            <p>Resumen actual del soporte</p>
+          </div>
+        </div>
+
+        <!-- Contenedor dinámico de incidencias -->
+        <div class="summary-boxes" id="incidentStatsBoxes"></div>
+      </div>
+    </section>
+
+    <!-- Tablas con rankings de clientes y productos -->
+    <section class="bottom-grid">
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Top clientes</h2>
+            <p>Clientes con más pedidos registrados</p>
+          </div>
+        </div>
+
+        <!-- Tabla que se rellena con JS -->
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Pedidos</th>
+                <th>Incidencias</th>
+              </tr>
+            </thead>
+            <tbody id="topClientesTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Top productos</h2>
+            <p>Productos destacados por stock y catálogo</p>
+          </div>
+        </div>
+
+        <!-- Tabla de productos más relevantes -->
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Stock</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="topProductosTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resumen general del sistema -->
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <h2>Resumen operativo</h2>
+          <p>Indicadores generales del sistema</p>
+        </div>
+      </div>
+
+      <!-- Contenedor dinámico con métricas adicionales -->
+      <div class="summary-boxes" id="operationalSummary"></div>
+    </section>
+
+  </main>
+
+</div>
+
+<!-- Scripts compartidos y lógica específica de estadísticas -->
+<script src="/js/shared.js"></script>
+<script src="/js/estadisticas.js"></script>
+
+</body>
+</html>
