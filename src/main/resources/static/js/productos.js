@@ -1,64 +1,109 @@
 /* =========================
-   PRODUCTOS
+   PRODUCTOS - SUPABASE
 ========================= */
+
+/* Conexión Supabase */
+const supabaseUrl = "https://dncrmwxsqaspfuvqmnoa.supabase.co";
+const supabaseKey = "sb_publishable_faWWHYqOlFHqwzMEa7EFzg_jSe77-KN";
+
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
 /* Referencias DOM */
 const productsTableBody = document.getElementById("productsTableBody");
 const searchProduct = document.getElementById("searchProduct");
 const productStatusFilter = document.getElementById("productStatusFilter");
 
-/* Render tabla productos */
+/* NUEVO (formulario) */
+const openProductFormBtn = document.getElementById("openProductFormBtn");
+const cancelProductFormBtn = document.getElementById("cancelProductFormBtn");
+const productFormPanel = document.getElementById("productFormPanel");
+const productForm = document.getElementById("productForm");
+
+/* Productos cargados */
+let productosSupabase = [];
+
+/* =========================
+   CARGAR PRODUCTOS
+========================= */
+
+async function cargarProductosSupabase() {
+  const { data, error } = await supabaseClient
+    .from("productos")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error al cargar productos:", error);
+    return;
+  }
+
+  productosSupabase = data || [];
+
+  renderProducts(productosSupabase);
+  renderProductStats();
+}
+
+/* =========================
+   RENDER TABLA
+========================= */
+
 function renderProducts(data) {
   if (!productsTableBody) return;
 
   productsTableBody.innerHTML = "";
 
   data.forEach((product) => {
-    const status = getProductStatus(product.stock);
+    const status = getProductStatus(Number(product.stock) || 0);
 
     const row = document.createElement("tr");
     row.classList.add("clickable-row");
-    row.title = "Ver detalle del producto";
 
-    /* Contenido fila */
     row.innerHTML = `
-      <td>${product.sku}</td>
-      <td>${product.nombre}</td>
-      <td>${product.artista}</td>
-      <td>${product.genero}</td>
-      <td>${formatPriceNumber(product.precio)}</td>
-      <td>${product.stock}</td>
+      <td>${product.sku || "-"}</td>
+      <td>
+        <div class="product-cell">
+          ${
+            product.imagen_url
+              ? `<img src="${product.imagen_url}" class="product-thumb" width="52" height="52">`
+              : ""
+          }
+          <span>${product.nombre || "-"}</span>
+        </div>
+      </td>
+      <td>${product.artista || "-"}</td>
+      <td>${product.genero || "-"}</td>
+      <td>${formatPriceNumber(Number(product.precio) || 0)}</td>
+      <td>${product.stock ?? 0}</td>
       <td><span class="${getProductStatusClass(status)}">${status}</span></td>
     `;
 
-    /* Click → guardar SKU y redirigir */
     row.addEventListener("click", () => {
-      localStorage.setItem("selectedProductSku", product.sku);
-      window.location.href = "/producto-detalle.html";
+      localStorage.setItem("selectedProductId", product.id);
+      window.location.href = "/producto-detalle";
     });
 
     productsTableBody.appendChild(row);
   });
 }
 
-/* Filtro productos */
+/* =========================
+   FILTROS
+========================= */
+
 function filterProducts() {
   if (!searchProduct || !productStatusFilter) return;
 
-  const allProducts = getAllProducts();
   const searchValue = searchProduct.value.toLowerCase();
   const statusValue = productStatusFilter.value;
 
-  const filtered = allProducts.filter((product) => {
-    const status = getProductStatus(product.stock);
+  const filtered = productosSupabase.filter((product) => {
+    const status = getProductStatus(Number(product.stock) || 0);
 
-    /* Buscar por nombre, artista o SKU */
     const matchesSearch =
-      product.nombre.toLowerCase().includes(searchValue) ||
-      product.artista.toLowerCase().includes(searchValue) ||
-      product.sku.toLowerCase().includes(searchValue);
+      (product.nombre || "").toLowerCase().includes(searchValue) ||
+      (product.artista || "").toLowerCase().includes(searchValue) ||
+      (product.sku || "").toLowerCase().includes(searchValue);
 
-    /* Filtrar por estado */
     const matchesStatus = statusValue === "all" || status === statusValue;
 
     return matchesSearch && matchesStatus;
@@ -67,181 +112,153 @@ function filterProducts() {
   renderProducts(filtered);
 }
 
-/* Estadísticas productos */
+/* =========================
+   STATS
+========================= */
+
 function renderProductStats() {
-  const products = getAllProducts();
+  const products = productosSupabase;
 
   const total = products.length;
-  const lowStock = products.filter(p => p.stock > 0 && p.stock < 5).length;
-  const outOfStock = products.filter(p => p.stock === 0).length;
-  const inventoryValue = products.reduce((acc, p) => acc + (p.precio * p.stock), 0);
+  const lowStock = products.filter(p => Number(p.stock) > 0 && Number(p.stock) < 5).length;
+  const outOfStock = products.filter(p => Number(p.stock) === 0).length;
 
-  /* Referencias DOM */
+  const inventoryValue = products.reduce((acc, p) => {
+    return acc + ((Number(p.precio) || 0) * (Number(p.stock) || 0));
+  }, 0);
+
   const totalProductos = document.getElementById("totalProductos");
   const stockBajo = document.getElementById("stockBajo");
   const sinStock = document.getElementById("sinStock");
   const valorInventario = document.getElementById("valorInventario");
 
-  /* Pintar valores */
   if (totalProductos) totalProductos.textContent = total;
   if (stockBajo) stockBajo.textContent = lowStock;
   if (sinStock) sinStock.textContent = outOfStock;
   if (valorInventario) valorInventario.textContent = formatPriceNumber(inventoryValue);
 }
 
-/* Detalle producto */
-function renderProductDetail() {
+/* =========================
+   CREAR PRODUCTO (NUEVO)
+========================= */
+
+async function crearProducto(e) {
+  e.preventDefault();
+
+  const nuevoProducto = {
+    sku: "VIN-" + Date.now(),
+    nombre: document.getElementById("productNombre").value,
+    artista: document.getElementById("productArtista").value,
+    genero: document.getElementById("productGenero").value,
+    precio: Number(document.getElementById("productPrecio").value),
+    stock: Number(document.getElementById("productStock").value),
+    imagen_url: document.getElementById("productImagenUrl").value || null
+  };
+
+  const { error } = await supabaseClient
+    .from("productos")
+    .insert([nuevoProducto]);
+
+  if (error) {
+    console.error("Error al crear producto:", error);
+    return;
+  }
+
+  productForm.reset();
+  productFormPanel.style.display = "none";
+
+  await cargarProductosSupabase();
+}
+
+/* =========================
+   DETALLE PRODUCTO
+========================= */
+
+async function renderProductDetail() {
   const productContent = document.getElementById("productContent");
   const noProductMessage = document.getElementById("noProductMessage");
   const productTitle = document.getElementById("productTitle");
-  const stockInput = document.getElementById("stockInput");
 
   if (!productContent || !noProductMessage || !productTitle) return;
 
-  const selectedProductSku = localStorage.getItem("selectedProductSku");
+  const selectedProductId = localStorage.getItem("selectedProductId");
 
-  /* Si no hay producto seleccionado */
-  if (!selectedProductSku) {
+  if (!selectedProductId) {
     productContent.style.display = "none";
     noProductMessage.style.display = "block";
     return;
   }
 
-  const product = getAllProducts().find(item => item.sku === selectedProductSku);
+  const { data: product } = await supabaseClient
+    .from("productos")
+    .select("*")
+    .eq("id", selectedProductId)
+    .single();
 
-  /* Si no existe */
-  if (!product) {
-    productContent.style.display = "none";
-    noProductMessage.style.display = "block";
-    return;
-  }
+  if (!product) return;
 
-  /* Mostrar contenido */
   productContent.style.display = "block";
   noProductMessage.style.display = "none";
 
-  /* Rellenar datos */
-  productTitle.textContent = product.nombre;
-  document.getElementById("detailProductSku").textContent = product.sku;
-  document.getElementById("detailProductNombre").textContent = product.nombre;
-  document.getElementById("detailProductArtista").textContent = product.artista;
-  document.getElementById("detailProductGenero").textContent = product.genero;
-  document.getElementById("detailProductDescripcion").textContent = product.descripcion;
-  document.getElementById("detailProductPrecio").textContent = formatPriceNumber(product.precio);
-  document.getElementById("detailProductStock").textContent = product.stock;
-  document.getElementById("detailProductFecha").textContent = product.fechaActualizacion;
-
-  /* Input stock */
-  if (stockInput) {
-    stockInput.value = product.stock;
-  }
-
-  /* Estado producto */
-  const productStatusBox = document.getElementById("productStatusBox");
-  const status = getProductStatus(product.stock);
-
-  if (productStatusBox) {
-    productStatusBox.innerHTML = `
-      <span>Estado</span>
-      <span class="${getProductStatusClass(status)}">${status}</span>
-    `;
-  }
-
-  /* Historial */
-  const productTimelineContainer = document.getElementById("productTimelineContainer");
-  if (productTimelineContainer) {
-    productTimelineContainer.innerHTML = product.historial.map(createTimelineItem).join("");
-  }
+  productTitle.textContent = product.nombre || "-";
 }
 
-/* Guardar cambio de stock */
-function guardarStockProducto() {
-  const selectedProductSku = localStorage.getItem("selectedProductSku");
+/* =========================
+   GUARDAR STOCK
+========================= */
+
+async function guardarStockProducto() {
+  const selectedProductId = localStorage.getItem("selectedProductId");
   const stockInput = document.getElementById("stockInput");
 
-  if (!selectedProductSku || !stockInput) return;
+  if (!selectedProductId || !stockInput) return;
 
   const nuevoStock = parseInt(stockInput.value, 10);
 
-  /* Validación */
   if (isNaN(nuevoStock) || nuevoStock < 0) return;
 
-  const saved = getSavedProducts();
-  const savedIndex = saved.findIndex(item => item.sku === selectedProductSku);
+  await supabaseClient
+    .from("productos")
+    .update({ stock: nuevoStock })
+    .eq("id", selectedProductId);
 
-  /* Si ya está guardado */
-  if (savedIndex !== -1) {
-    const oldStock = saved[savedIndex].stock;
-
-    if (oldStock !== nuevoStock) {
-      saved[savedIndex].stock = nuevoStock;
-      saved[savedIndex].fechaActualizacion = new Date().toLocaleDateString();
-
-      /* Añadir historial */
-      saved[savedIndex].historial.push({
-        titulo: "Stock actualizado",
-        fecha: new Date().toLocaleString(),
-        texto: `El stock ha cambiado de ${oldStock} a ${nuevoStock}.`
-      });
-
-      saveUserProducts(saved);
-    }
-
-    renderProductDetail();
-    renderProductStats();
-
-    /* Refrescar tabla si existe */
-    if (productsTableBody) renderProducts(getAllProducts());
-    return;
-  }
-
-  /* Si es base */
-  const base = baseProducts.find(item => item.sku === selectedProductSku);
-  if (!base) return;
-
-  const copy = JSON.parse(JSON.stringify(base));
-  const oldStock = copy.stock;
-
-  if (oldStock !== nuevoStock) {
-    copy.stock = nuevoStock;
-    copy.fechaActualizacion = new Date().toLocaleDateString();
-
-    copy.historial.push({
-      titulo: "Stock actualizado",
-      fecha: new Date().toLocaleString(),
-      texto: `El stock ha cambiado de ${oldStock} a ${nuevoStock}.`
-    });
-  }
-
-  saved.push(copy);
-  saveUserProducts(saved);
-
-  renderProductDetail();
-  renderProductStats();
-
-  if (productsTableBody) renderProducts(getAllProducts());
+  await cargarProductosSupabase();
 }
 
-/* INIT */
+/* =========================
+   INIT
+========================= */
 
-/* Tabla */
 if (productsTableBody) {
-  renderProducts(getAllProducts());
+  cargarProductosSupabase();
 }
 
-/* Stats */
-renderProductStats();
-
-/* Detalle */
 renderProductDetail();
 
-/* Eventos filtros */
 if (searchProduct) {
   searchProduct.addEventListener("input", filterProducts);
 }
+
 if (productStatusFilter) {
   productStatusFilter.addEventListener("change", filterProducts);
 }
 
-/* Exponer función */
+/* BOTÓN NUEVO PRODUCTO */
+if (openProductFormBtn) {
+  openProductFormBtn.addEventListener("click", () => {
+    productFormPanel.style.display = "block";
+  });
+}
+
+if (cancelProductFormBtn) {
+  cancelProductFormBtn.addEventListener("click", () => {
+    productFormPanel.style.display = "none";
+  });
+}
+
+if (productForm) {
+  productForm.addEventListener("submit", crearProducto);
+}
+
+/* Exponer */
 window.guardarStockProducto = guardarStockProducto;

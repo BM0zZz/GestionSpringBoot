@@ -451,6 +451,34 @@ textarea {
   gap: 12px;
 }
 
+/* PRODUCTOS (miniatura + nombre en tablas) */
+.product-cell {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.product-cell img,
+.product-thumb {
+  width: 52px !important;
+  height: 52px !important;
+  max-width: 52px !important;
+  max-height: 52px !important;
+  object-fit: cover !important;
+  border-radius: 8px;
+  border: 1px solid #263241;
+  display: block;
+}
+
+.product-cell span {
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+table td {
+  vertical-align: middle;
+}
+
 /* Responsive formulario */
 @media (max-width: 900px) {
   .form-grid {

@@ -60,4 +60,9 @@ public class WebController {
     public String login() {
         return "login";
     }
+    
+    @GetMapping("/nuevo-producto")
+    public String nuevoProducto() {
+        return "nuevo-producto";
+    }
 }
