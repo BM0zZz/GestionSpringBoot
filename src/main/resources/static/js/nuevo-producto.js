@@ -44,6 +44,7 @@ if (form) {
       genero: document.getElementById("genero").value,
       precio: Number(precioTexto),
       stock: Number(document.getElementById("stock").value),
+      descripcion: document.getElementById("descripcion").value,
       imagen_url: imagenUrl,
       estado: "Activo"
     };

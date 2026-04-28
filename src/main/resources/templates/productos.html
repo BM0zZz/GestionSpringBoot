@@ -31,54 +31,6 @@
       </button>
     </header>
 
-    <!-- Formulario para crear productos -->
-    <section class="panel" id="productFormPanel" style="display: none;">
-      <div class="panel-header">
-        <div>
-          <h2>Crear nuevo producto</h2>
-          <p>Introduce los datos del vinilo para añadirlo al catálogo</p>
-        </div>
-      </div>
-
-      <form id="productForm">
-        <div class="form-grid">
-          <div>
-            <label>Nombre</label>
-            <input type="text" id="productNombre" required>
-          </div>
-
-          <div>
-            <label>Artista</label>
-            <input type="text" id="productArtista" required>
-          </div>
-
-          <div>
-            <label>Género</label>
-            <input type="text" id="productGenero" required>
-          </div>
-
-          <div>
-            <label>Precio</label>
-            <input type="number" id="productPrecio" step="0.01" min="0" required>
-          </div>
-
-          <div>
-            <label>Stock</label>
-            <input type="number" id="productStock" min="0" required>
-          </div>
-
-          <div>
-            <label>URL imagen</label>
-            <input type="text" id="productImagenUrl">
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <button type="submit" class="primary-btn">Guardar producto</button>
-          <button type="button" class="secondary-btn" id="cancelProductFormBtn">Cancelar</button>
-        </div>
-      </form>
-    </section>
 
     <!-- Tarjetas con estadísticas rápidas del catálogo -->
     <section class="stats-grid">

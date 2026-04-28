@@ -18,6 +18,7 @@
   <main class="main-content">
 
     <div id="productContent" style="display:none;">
+
       <div class="detail-topbar">
         <div>
           <p class="breadcrumb">
@@ -27,17 +28,16 @@
         </div>
 
         <div class="detail-actions-bar">
-          <div class="status-change-box">
-            <label for="stockInput">Cambiar stock</label>
-            <input type="number" id="stockInput" min="0">
-          </div>
-
-          <button class="secondary-btn" type="button" onclick="guardarStockProducto()">
-            Guardar stock
+          <button class="secondary-btn" type="button" onclick="window.location.href='/productos'">
+            ← Volver
           </button>
 
-          <button class="primary-btn" type="button" onclick="window.location.href='/productos'">
-            ← Volver
+          <button class="primary-btn" type="button" onclick="guardarCambiosProducto()">
+            Guardar cambios
+          </button>
+
+          <button class="secondary-btn" type="button" onclick="eliminarProducto()">
+            Eliminar producto
           </button>
         </div>
       </div>
@@ -45,33 +45,60 @@
       <div class="detail-grid">
 
         <div class="panel">
-          <h2>Información del producto</h2>
+          <h2>Editar producto</h2>
 
-          <div class="detail-info-grid">
-            <div class="detail-info-card">
-              <span>SKU</span>
-              <h3 id="detailProductSku"></h3>
+          <form id="editProductForm">
+            <div class="form-grid">
+
+              <div>
+                <label>SKU</label>
+                <input type="text" id="editProductSku" required>
+              </div>
+
+              <div>
+                <label>Nombre</label>
+                <input type="text" id="editProductNombre" required>
+              </div>
+
+              <div>
+                <label>Artista</label>
+                <input type="text" id="editProductArtista" required>
+              </div>
+
+              <div>
+                <label>Género</label>
+                <input type="text" id="editProductGenero" required>
+              </div>
+
+              <div>
+                <label>Precio</label>
+                <input type="number" id="editProductPrecio" step="0.01" min="0" required>
+              </div>
+
+              <div>
+                <label>Stock</label>
+                <input type="number" id="editProductStock" min="0" required>
+              </div>
+
+              <div>
+                <label>Nueva imagen</label>
+                <input type="file" id="editProductImagen" accept="image/*">
+              </div>
+
             </div>
 
-            <div class="detail-info-card">
-              <span>Producto</span>
-              <h3 id="detailProductNombre"></h3>
+            <div style="margin-top:24px;">
+              <label>Descripción</label>
+              <textarea id="editProductDescripcion" required></textarea>
             </div>
+          </form>
+        </div>
 
-            <div class="detail-info-card">
-              <span>Artista</span>
-              <h3 id="detailProductArtista"></h3>
-            </div>
+        <div class="panel">
+          <h2>Vista previa</h2>
 
-            <div class="detail-info-card">
-              <span>Género</span>
-              <h3 id="detailProductGenero"></h3>
-            </div>
-          </div>
-
-          <div class="panel">
-            <h3>Descripción</h3>
-            <p id="detailProductDescripcion"></p>
+          <div style="margin-bottom:20px;">
+            <img id="detailProductImage" src="" alt="Imagen del producto" style="width:180px; height:180px; object-fit:cover; border-radius:16px; border:1px solid #2a2f38;">
           </div>
 
           <div class="detail-meta-row">
@@ -90,15 +117,10 @@
             </div>
 
             <div class="meta-item">
-              <span>Última actualización</span>
+              <span>Creado</span>
               <strong id="detailProductFecha"></strong>
             </div>
           </div>
-        </div>
-
-        <div class="panel">
-          <h2>Historial de stock</h2>
-          <div id="productTimelineContainer"></div>
         </div>
 
       </div>
@@ -118,6 +140,7 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 <script src="/js/shared.js"></script>
 <script src="/js/productos.js"></script>
 
