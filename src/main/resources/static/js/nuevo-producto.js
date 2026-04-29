@@ -1,8 +1,4 @@
-const supabaseUrl = "https://dncrmwxsqaspfuvqmnoa.supabase.co";
-const supabaseKey = "sb_publishable_faWWHYqOlFHqwzMEa7EFzg_jSe77-KN";
-
-const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
-
+const supabaseClient = window.supabaseClient;
 const form = document.getElementById("nuevoProductoForm");
 
 if (form) {

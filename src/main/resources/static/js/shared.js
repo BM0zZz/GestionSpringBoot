@@ -535,6 +535,39 @@ function initTheme() {
 document.addEventListener("DOMContentLoaded", initTheme);
 
 /* =========================
+   USUARIO ACTUAL
+========================= */
+
+/* Cargar nombre del usuario logueado en el sidebar */
+async function loadCurrentUser() {
+
+  if (!window.supabaseClient) return;
+
+  const { data: sessionData } = await window.supabaseClient.auth.getSession();
+
+  if (!sessionData.session) return;
+
+  const userId = sessionData.session.user.id;
+
+  const { data: perfil, error } = await window.supabaseClient
+    .from("perfiles")
+    .select("nombre")
+    .eq("id", userId)
+    .single();
+
+  if (error || !perfil) return;
+
+  const sidebarUserName = document.getElementById("sidebarUserName");
+
+  if (sidebarUserName) {
+    sidebarUserName.textContent = perfil.nombre;
+  }
+}
+
+/* Ejecutar carga del usuario */
+document.addEventListener("DOMContentLoaded", loadCurrentUser);
+
+/* =========================
    LOGIN / PROTECCIÓN
 ========================= */
 
@@ -542,10 +575,11 @@ function protectPage() {
 
   const currentPath = window.location.pathname;
 
-  // Si estamos en login, no bloquear
+  // Permitir acceso al login
   if (currentPath === "/login") return;
 
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  // NUEVA KEY
+  const isLoggedIn = localStorage.getItem("adminLoggedIn");
 
   // Si no hay sesión → fuera
   if (isLoggedIn !== "true") {
@@ -559,9 +593,15 @@ document.addEventListener("DOMContentLoaded", protectPage);
    LOGOUT
 ========================= */
 
-function logout() {
-  localStorage.removeItem("isLoggedIn");
-  localStorage.removeItem("loggedUserEmail");
+async function logout() {
+
+  // NUEVA KEY
+  localStorage.removeItem("adminLoggedIn");
+
+  // Cerrar sesión Supabase si existe
+  if (window.supabaseClient) {
+    await window.supabaseClient.auth.signOut();
+  }
 
   window.location.href = "/login";
 }

@@ -1,28 +1,25 @@
-// Referencias al DOM
 const loginForm = document.getElementById("loginForm");
 const loginError = document.getElementById("loginError");
 
-/* Si ya está logueado, entra directo al panel */
-if (localStorage.getItem("isLoggedIn") === "true") {
-  window.location.href = "/";
-}
-
-/* Evento submit del formulario */
-loginForm.addEventListener("submit", function (e) {
+loginForm.addEventListener("submit", async function (e) {
   e.preventDefault();
+
+  loginError.textContent = "Comprobando credenciales...";
 
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  if (email !== "" && password !== "") {
+  const { data, error } = await window.supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
 
-    localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("loggedUserEmail", email);
-
-    // 🔥 cambio importante
-    window.location.href = "/";
-
-  } else {
-    loginError.textContent = "Introduce email y contraseña.";
+  if (error) {
+    loginError.textContent = "Usuario o contraseña incorrectos.";
+    return;
   }
+
+  localStorage.setItem("adminLoggedIn", "true");
+
+  window.location.href = "/";
 });
