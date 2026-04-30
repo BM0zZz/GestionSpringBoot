@@ -1,32 +1,75 @@
+<!-- 
+  Sidebar principal de la aplicación.
+  Este bloque está definido como un fragmento de Thymeleaf con el nombre "sidebar",
+  por lo que puede reutilizarse en varias páginas del panel de administración.
+-->
 <aside class="sidebar" th:fragment="sidebar">
 
+  <!-- Parte superior del menú lateral -->
   <div class="sidebar-top">
+
+    <!-- Contenedor del logo y del nombre de la aplicación -->
     <div class="logo-box">
+
+      <!-- Elemento visual decorativo que representa el icono/logo -->
       <div class="logo-circle"></div>
+
+      <!-- Nombre de la aplicación y subtítulo -->
       <div>
         <h2>ViniloTFG Admin</h2>
         <p>Gestión interna</p>
       </div>
+
     </div>
   </div>
 
- <nav class="sidebar-nav">
-  <a href="/" class="nav-item">Dashboard</a>
-  <a href="/pedidos" class="nav-item">Pedidos</a>
-  <a href="/clientes" class="nav-item">Clientes</a>
-  <a href="/productos" class="nav-item">Productos</a>
-  <a href="/estadisticas" class="nav-item">Estadísticas</a>
-  <a href="/configuracion" class="nav-item">Configuración</a>
-</nav>
+  <!-- 
+    Navegación principal del panel.
+    Cada enlace permite acceder a una sección distinta de la aplicación.
+  -->
+  <nav class="sidebar-nav">
 
+    <!-- Enlace a la página principal del panel -->
+    <a href="/" class="nav-item">Dashboard</a>
+
+    <!-- Enlace a la sección de gestión de pedidos -->
+    <a href="/pedidos" class="nav-item">Pedidos</a>
+
+    <!-- Enlace a la sección de clientes -->
+    <a href="/clientes" class="nav-item">Clientes</a>
+
+    <!-- Enlace a la sección de productos del catálogo -->
+    <a href="/productos" class="nav-item">Productos</a>
+
+    <!-- Enlace a la sección de estadísticas -->
+    <a href="/estadisticas" class="nav-item">Estadísticas</a>
+
+    <!-- Enlace a la página de configuración del sistema -->
+    <a href="/configuracion" class="nav-item">Configuración</a>
+
+  </nav>
+
+  <!-- Parte inferior del sidebar, donde se muestra la información del usuario -->
   <div class="sidebar-bottom">
+
+    <!-- Tarjeta con la información básica del usuario conectado -->
     <div class="user-card">
 
+      <!-- Avatar visual del usuario, en este caso con la inicial A de Administrador -->
       <div class="user-avatar">A</div>
 
+      <!-- Nombre y rol del usuario -->
       <div>
+
+        <!-- 
+          Nombre del usuario mostrado en el sidebar.
+          El id permite modificar este texto dinámicamente con JavaScript si fuera necesario.
+        -->
         <h4 id="sidebarUserName">Administrador</h4>
+
+        <!-- Rol del usuario dentro del panel -->
         <p>Administrador</p>
+
       </div>
 
     </div>
