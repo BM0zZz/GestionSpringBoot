@@ -31,6 +31,15 @@ public class WebController {
     }
 
     /*
+      Muestra el detalle de un cliente.
+      Carga la plantilla cliente-detalle.html.
+    */
+    @GetMapping("/cliente-detalle")
+    public String clienteDetalle() {
+        return "cliente-detalle";
+    }
+
+    /*
       Muestra la página de configuración.
       Carga la plantilla configuracion.html.
     */

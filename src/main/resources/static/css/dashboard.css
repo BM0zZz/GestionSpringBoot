@@ -44,3 +44,14 @@
   grid-template-columns: 2fr 1fr;
   gap: 20px;
 }
+
+/* Filas clicables de tablas */
+.clickable-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Efecto hover al pasar el ratón por encima */
+.clickable-row:hover {
+  background-color: rgba(124, 92, 255, 0.12);
+}

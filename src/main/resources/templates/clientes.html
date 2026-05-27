@@ -14,7 +14,7 @@
 
 <div class="layout">
 
-  <!--Sidebar reutilizable -->
+  <!-- Sidebar reutilizable -->
   <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
   <!-- Contenido principal -->
@@ -41,13 +41,13 @@
       </div>
 
       <div class="stat-card">
-        <p>Con incidencias</p>
-        <h3 id="clientesIncidencias"></h3>
+        <p>Socios</p>
+        <h3 id="clientesSocios"></h3>
       </div>
 
       <div class="stat-card">
         <p>Nuevos este mes</p>
-        <h3>+12</h3>
+        <h3 id="clientesNuevosMes"></h3>
       </div>
     </section>
 
@@ -67,10 +67,12 @@
             <tr>
               <th>Nombre</th>
               <th>Email</th>
-              <th>Pedidos</th>
-              <th>Incidencias</th>
+              <th>Nº socio</th>
+              <th>Nivel</th>
+              <th>Puntos disponibles</th>
             </tr>
           </thead>
+
           <tbody id="clientesTable"></tbody>
         </table>
       </div>

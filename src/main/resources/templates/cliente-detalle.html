@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle cliente - ViniloTFG Admin</title>
+
+    <!-- Hojas de estilo -->
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/incidencia.css">
+    <link rel="stylesheet" href="/css/theme.css">
+</head>
+
+<body>
+
+    <div class="layout">
+
+        <!-- Sidebar reutilizable -->
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+        <!-- Contenido principal -->
+        <main class="main-content">
+
+            <!-- Contenido cuando existe cliente -->
+            <div id="clienteContent" style="display: none;">
+
+                <!-- Encabezado -->
+                <header class="topbar">
+                    <div>
+                        <h1 id="clienteTitle">Detalle de cliente</h1>
+                        <p>Consulta y modifica los datos del cliente seleccionado</p>
+                    </div>
+
+                    <div class="detail-actions-bar">
+                        <button class="secondary-btn" type="button" onclick="window.location.href='/clientes'">
+                            ← Volver
+                        </button>
+
+                        <button class="primary-btn" type="button" onclick="guardarCambiosCliente()">
+                            Guardar cambios
+                        </button>
+
+                        <button class="secondary-btn" type="button" onclick="eliminarCliente()">
+                            Eliminar cliente
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Estadísticas / vista rápida -->
+                <section class="stats-grid">
+                    <div class="stat-card">
+                        <p>Nº socio</p>
+                        <h3 id="detailClienteSocio"></h3>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Nivel</p>
+                        <h3 id="detailClienteNivel"></h3>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Puntos disponibles</p>
+                        <h3 id="detailClientePuntosDisponibles"></h3>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Puntos histórico</p>
+                        <h3 id="detailClientePuntosHistorico"></h3>
+                    </div>
+                </section>
+
+                <!-- Formulario de edición -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <h2>Datos del cliente</h2>
+                    </div>
+
+                    <form id="editClienteForm">
+
+                        <div class="form-grid">
+
+                            <div>
+                                <label for="editClienteId">ID</label>
+                                <input type="text" id="editClienteId" disabled>
+                            </div>
+
+                            <div>
+                                <label for="editClienteFecha">Fecha de registro</label>
+                                <input type="text" id="editClienteFecha" disabled>
+                            </div>
+
+                            <div>
+                                <label for="editClienteNombre">Nombre</label>
+                                <input type="text" id="editClienteNombre" required>
+                            </div>
+
+                            <div>
+                                <label for="editClienteApellidos">Apellidos</label>
+                                <input type="text" id="editClienteApellidos">
+                            </div>
+
+                            <div>
+                                <label for="editClienteEmail">Email</label>
+                                <input type="email" id="editClienteEmail" required>
+                            </div>
+
+                            <div>
+                                <label for="editClienteTelefono">Teléfono</label>
+                                <input type="text" id="editClienteTelefono">
+                            </div>
+
+                            <div>
+                                <label for="editClienteSocioNum">Número de socio</label>
+                                <input type="text" id="editClienteSocioNum">
+                            </div>
+
+                            <div>
+                                <label for="editClienteNivel">Nivel</label>
+                                <select id="editClienteNivel">
+                                    <option value="">Sin nivel</option>
+                                    <option value="Bronce">Bronce</option>
+                                    <option value="Plata">Plata</option>
+                                    <option value="Oro">Oro</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="editClientePuntosHistorico">Puntos histórico</label>
+                                <input type="number" id="editClientePuntosHistorico" min="0">
+                            </div>
+
+                            <div>
+                                <label for="editClientePuntosDisponibles">Puntos disponibles</label>
+                                <input type="number" id="editClientePuntosDisponibles" min="0">
+                            </div>
+
+                        </div>
+
+                    </form>
+                </section>
+
+                <!-- Información de lectura -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <h2>Resumen del cliente</h2>
+                    </div>
+
+                    <div class="detail-meta-row">
+
+                        <div class="meta-item">
+                            <span>Nombre completo</span>
+                            <strong id="previewClienteNombre"></strong>
+                        </div>
+
+                        <div class="meta-item">
+                            <span>Email</span>
+                            <strong id="previewClienteEmail"></strong>
+                        </div>
+
+                        <div class="meta-item">
+                            <span>Teléfono</span>
+                            <strong id="previewClienteTelefono"></strong>
+                        </div>
+
+                        <div class="meta-item">
+                            <span>Fecha de registro</span>
+                            <strong id="previewClienteFecha"></strong>
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Mensaje si no hay cliente -->
+            <section id="noClienteMessage" class="panel" style="display: none;">
+                <div class="panel-header">
+                    <h2>No hay ningún cliente seleccionado</h2>
+                </div>
+
+                <p style="color: #a1a7b3; line-height: 1.6; margin-bottom: 20px;">
+                    Para ver o modificar un cliente, vuelve al listado y haz clic sobre uno de los clientes registrados.
+                </p>
+
+                <button class="primary-btn" type="button" onclick="window.location.href='/clientes'">
+                    Ir al listado de clientes
+                </button>
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/supabase.js"></script>
+    <script src="/js/shared.js"></script>
+    <script src="/js/cliente-detalle.js"></script>
+
+</body>
+
+</html>

@@ -136,11 +136,11 @@ a {
 /* Filas clicables (tablas, listas, etc.) */
 .clickable-row {
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .clickable-row:hover {
-  background-color: #232832 !important;
-  transform: scale(1.01);
+  background-color: rgba(124, 92, 255, 0.12) !important;
 }
 
 /* TARJETA DE USUARIO */
@@ -311,7 +311,7 @@ td:last-child {
 
 /* Hover filas */
 tbody tr {
-  transition: 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 tbody tr:hover {
@@ -494,10 +494,12 @@ textarea {
 table td {
   vertical-align: middle;
 }
+
 /* Evita que el precio se parta en dos líneas */
 .price-cell {
   white-space: nowrap;
 }
+
 /* Responsive formulario */
 @media (max-width: 900px) {
   .form-grid {
