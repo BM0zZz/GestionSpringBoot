@@ -37,11 +37,17 @@ function renderProducts(data) {
   data.forEach((product) => {
     const status = getProductStatus(Number(product.stock) || 0);
 
+    const categoria = product.categoria || "-";
+    const formato = product.formato || "-";
+    const anio = product.anio || "-";
+    const tallas = product.tallas || "-";
+
     const row = document.createElement("tr");
     row.classList.add("clickable-row");
 
     row.innerHTML = `
       <td>${product.sku || "-"}</td>
+
       <td>
         <div class="product-cell">
           ${
@@ -52,9 +58,14 @@ function renderProducts(data) {
           <span>${product.nombre || "-"}</span>
         </div>
       </td>
+
       <td>${product.artista || "-"}</td>
       <td>${product.genero || "-"}</td>
-      <td>${formatPriceNumber(Number(product.precio) || 0)}</td>
+      <td>${categoria}</td>
+      <td>${formato}</td>
+      <td>${anio}</td>
+      <td>${tallas}</td>
+      <td class="price-cell">${formatPriceNumber(Number(product.precio) || 0)}</td>
       <td>${product.stock ?? 0}</td>
       <td><span class="${getProductStatusClass(status)}">${status}</span></td>
     `;
@@ -80,7 +91,12 @@ function filterProducts() {
     const matchesSearch =
       (product.nombre || "").toLowerCase().includes(searchValue) ||
       (product.artista || "").toLowerCase().includes(searchValue) ||
-      (product.sku || "").toLowerCase().includes(searchValue);
+      (product.sku || "").toLowerCase().includes(searchValue) ||
+      (product.genero || "").toLowerCase().includes(searchValue) ||
+      (product.categoria || "").toLowerCase().includes(searchValue) ||
+      (product.formato || "").toLowerCase().includes(searchValue) ||
+      String(product.anio || "").toLowerCase().includes(searchValue) ||
+      (product.tallas || "").toLowerCase().includes(searchValue);
 
     const matchesStatus = statusValue === "all" || status === statusValue;
 
@@ -146,29 +162,47 @@ async function renderProductDetail() {
   noProductMessage.style.display = "none";
 
   const productTitle = document.getElementById("productTitle");
+
   const editProductSku = document.getElementById("editProductSku");
   const editProductNombre = document.getElementById("editProductNombre");
   const editProductArtista = document.getElementById("editProductArtista");
   const editProductGenero = document.getElementById("editProductGenero");
+  const editProductCategoria = document.getElementById("editProductCategoria");
+  const editProductFormato = document.getElementById("editProductFormato");
+  const editProductAnio = document.getElementById("editProductAnio");
+  const editProductTallas = document.getElementById("editProductTallas");
   const editProductPrecio = document.getElementById("editProductPrecio");
   const editProductStock = document.getElementById("editProductStock");
   const editProductDescripcion = document.getElementById("editProductDescripcion");
 
   if (productTitle) productTitle.textContent = product.nombre || "-";
+
   if (editProductSku) editProductSku.value = product.sku || "";
   if (editProductNombre) editProductNombre.value = product.nombre || "";
   if (editProductArtista) editProductArtista.value = product.artista || "";
   if (editProductGenero) editProductGenero.value = product.genero || "";
+  if (editProductCategoria) editProductCategoria.value = product.categoria || "";
+  if (editProductFormato) editProductFormato.value = product.formato || "";
+  if (editProductAnio) editProductAnio.value = product.anio || "";
+  if (editProductTallas) editProductTallas.value = product.tallas || "";
   if (editProductPrecio) editProductPrecio.value = product.precio ?? "";
   if (editProductStock) editProductStock.value = product.stock ?? 0;
   if (editProductDescripcion) editProductDescripcion.value = product.descripcion || "";
 
   const detailProductPrecio = document.getElementById("detailProductPrecio");
   const detailProductStock = document.getElementById("detailProductStock");
+  const detailProductCategoria = document.getElementById("detailProductCategoria");
+  const detailProductFormato = document.getElementById("detailProductFormato");
+  const detailProductAnio = document.getElementById("detailProductAnio");
+  const detailProductTallas = document.getElementById("detailProductTallas");
   const detailProductFecha = document.getElementById("detailProductFecha");
 
   if (detailProductPrecio) detailProductPrecio.textContent = formatPriceNumber(Number(product.precio) || 0);
   if (detailProductStock) detailProductStock.textContent = product.stock ?? 0;
+  if (detailProductCategoria) detailProductCategoria.textContent = product.categoria || "-";
+  if (detailProductFormato) detailProductFormato.textContent = product.formato || "-";
+  if (detailProductAnio) detailProductAnio.textContent = product.anio || "-";
+  if (detailProductTallas) detailProductTallas.textContent = product.tallas || "No aplica";
 
   if (detailProductFecha) {
     detailProductFecha.textContent = product.created_at
@@ -228,11 +262,44 @@ async function guardarCambiosProducto() {
 
   const precioTexto = document.getElementById("editProductPrecio").value.replace(",", ".");
 
+  const categoria = document.getElementById("editProductCategoria").value;
+  const formato = document.getElementById("editProductFormato").value;
+  const tallas = document.getElementById("editProductTallas").value;
+
+  if (categoria === "vinilo" && formato !== "LP") {
+    alert("Si la categoría es Vinilo, el formato debe ser LP.");
+    return;
+  }
+
+  if (categoria === "poster" && formato !== "A3") {
+    alert("Si la categoría es Póster, el formato debe ser A3.");
+    return;
+  }
+
+  if (categoria === "merch" && formato !== "Ropa") {
+    alert("Si la categoría es Merchandising, el formato debe ser Ropa.");
+    return;
+  }
+
+  if ((categoria === "vinilo" || categoria === "poster") && tallas !== "") {
+    alert("Si la categoría es Vinilo o Póster, las tallas deben ser No aplica.");
+    return;
+  }
+
+  if (categoria === "merch" && tallas !== "Única") {
+    alert("Si la categoría es Merchandising, la talla debe ser Única.");
+    return;
+  }
+
   const productoActualizado = {
     sku: document.getElementById("editProductSku").value.trim(),
     nombre: document.getElementById("editProductNombre").value.trim(),
     artista: document.getElementById("editProductArtista").value.trim(),
     genero: document.getElementById("editProductGenero").value.trim(),
+    categoria: categoria,
+    formato: formato,
+    anio: Number(document.getElementById("editProductAnio").value),
+    tallas: tallas || null,
     precio: Number(precioTexto),
     stock: Number(document.getElementById("editProductStock").value),
     descripcion: document.getElementById("editProductDescripcion").value.trim()

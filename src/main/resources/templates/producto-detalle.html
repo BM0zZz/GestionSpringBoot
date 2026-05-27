@@ -71,6 +71,39 @@
               </div>
 
               <div>
+                <label>Categoría</label>
+                <select id="editProductCategoria" required>
+                  <option value="">Selecciona una categoría</option>
+                  <option value="vinilo">Vinilo</option>
+                  <option value="poster">Póster</option>
+                  <option value="merch">Merchandising</option>
+                </select>
+              </div>
+
+              <div>
+                <label>Formato</label>
+                <select id="editProductFormato" required>
+                  <option value="">Selecciona un formato</option>
+                  <option value="LP">LP</option>
+                  <option value="A3">A3</option>
+                  <option value="Ropa">Ropa</option>
+                </select>
+              </div>
+
+              <div>
+                <label>Año</label>
+                <input type="number" id="editProductAnio" placeholder="Ej: 2024" required>
+              </div>
+
+              <div>
+                <label>Tallas</label>
+                <select id="editProductTallas">
+                  <option value="">No aplica</option>
+                  <option value="Única">Única</option>
+                </select>
+              </div>
+
+              <div>
                 <label>Precio</label>
                 <input type="number" id="editProductPrecio" step="0.01" min="0" required>
               </div>
@@ -110,6 +143,26 @@
             <div class="meta-item">
               <span>Stock</span>
               <strong id="detailProductStock"></strong>
+            </div>
+
+            <div class="meta-item">
+              <span>Categoría</span>
+              <strong id="detailProductCategoria"></strong>
+            </div>
+
+            <div class="meta-item">
+              <span>Formato</span>
+              <strong id="detailProductFormato"></strong>
+            </div>
+
+            <div class="meta-item">
+              <span>Año</span>
+              <strong id="detailProductAnio"></strong>
+            </div>
+
+            <div class="meta-item">
+              <span>Tallas</span>
+              <strong id="detailProductTallas"></strong>
             </div>
 
             <div class="meta-item" id="productStatusBox">

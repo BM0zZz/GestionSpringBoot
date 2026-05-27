@@ -33,14 +33,47 @@ if (form) {
     const sku = document.getElementById("sku").value.trim();
     const precioTexto = document.getElementById("precio").value.replace(",", ".");
 
+    const categoria = document.getElementById("categoria").value;
+    const formato = document.getElementById("formato").value;
+    const tallas = document.getElementById("tallas").value;
+
+    if (categoria === "vinilo" && formato !== "LP") {
+      alert("Si la categoría es Vinilo, el formato debe ser LP.");
+      return;
+    }
+
+    if (categoria === "poster" && formato !== "A3") {
+      alert("Si la categoría es Póster, el formato debe ser A3.");
+      return;
+    }
+
+    if (categoria === "merch" && formato !== "Ropa") {
+      alert("Si la categoría es Merchandising, el formato debe ser Ropa.");
+      return;
+    }
+
+    if ((categoria === "vinilo" || categoria === "poster") && tallas !== "") {
+      alert("Si la categoría es Vinilo o Póster, las tallas deben ser No aplica.");
+      return;
+    }
+
+    if (categoria === "merch" && tallas !== "Única") {
+      alert("Si la categoría es Merchandising, la talla debe ser Única.");
+      return;
+    }
+
     const nuevoProducto = {
       sku: sku,
-      nombre: document.getElementById("nombre").value,
-      artista: document.getElementById("artista").value,
-      genero: document.getElementById("genero").value,
+      nombre: document.getElementById("nombre").value.trim(),
+      artista: document.getElementById("artista").value.trim(),
+      genero: document.getElementById("genero").value.trim(),
+      categoria: categoria,
+      formato: formato,
+      anio: Number(document.getElementById("anio").value),
+      tallas: tallas || null,
       precio: Number(precioTexto),
       stock: Number(document.getElementById("stock").value),
-      descripcion: document.getElementById("descripcion").value,
+      descripcion: document.getElementById("descripcion").value.trim(),
       imagen_url: imagenUrl,
       estado: "Activo"
     };

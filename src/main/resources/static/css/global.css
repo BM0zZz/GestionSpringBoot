@@ -182,6 +182,7 @@ a {
 .main-content {
   flex: 1; /* Ocupa el resto del espacio */
   padding: 30px 32px;
+  min-width: 0;
 }
 
 /* BOTONES PRINCIPALES */
@@ -232,6 +233,7 @@ a {
   padding: 24px;
   margin-bottom: 28px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  min-width: 0;
 }
 
 /* Cabecera del panel */
@@ -258,13 +260,19 @@ a {
 
 /* TABLAS */
 .table-container {
-  overflow-x: auto; /* Scroll horizontal si hace falta */
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
   border-radius: 16px;
+  box-sizing: border-box;
 }
 
+/* Tabla general */
 table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: auto;
 }
 
 /* Cabecera tabla */
@@ -276,7 +284,7 @@ thead {
 th,
 td {
   text-align: left;
-  padding: 18px 16px;
+  padding: 16px 10px;
   border-bottom: 1px solid #2a2f38;
   font-size: 14px;
   vertical-align: middle;
@@ -286,11 +294,19 @@ td {
 th {
   color: #d8deea;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 /* Contenido */
 td {
   color: #f3f4f6;
+  white-space: normal;
+}
+
+/* Ajuste para que la última columna no se corte */
+th:last-child,
+td:last-child {
+  padding-right: 18px;
 }
 
 /* Hover filas */
@@ -385,7 +401,7 @@ tbody tr:hover {
 
   th,
   td {
-    padding: 14px 12px;
+    padding: 14px 8px;
   }
 }
 
@@ -478,7 +494,10 @@ textarea {
 table td {
   vertical-align: middle;
 }
-
+/* Evita que el precio se parta en dos líneas */
+.price-cell {
+  white-space: nowrap;
+}
 /* Responsive formulario */
 @media (max-width: 900px) {
   .form-grid {
