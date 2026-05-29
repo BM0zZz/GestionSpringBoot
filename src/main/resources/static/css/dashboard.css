@@ -55,3 +55,132 @@
 .clickable-row:hover {
   background-color: rgba(124, 92, 255, 0.12);
 }
+
+/* =========================
+   RESPONSIVE DASHBOARD
+========================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .topbar-actions {
+    width: 100%;
+  }
+
+  .topbar-actions .primary-btn,
+  .topbar-actions .secondary-btn {
+    width: 100%;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bottom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    flex-wrap: wrap;
+  }
+
+  .filters input,
+  .filters select {
+    flex: 1;
+    min-width: 220px;
+  }
+}
+
+/* Móvil */
+@media (max-width: 700px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .topbar h1 {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+  .topbar p {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .topbar-actions {
+    width: 100%;
+  }
+
+  .topbar-actions button {
+    width: 100%;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .stat-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .stat-info p {
+    font-size: 13px;
+  }
+
+  .stat-info h3 {
+    font-size: 24px;
+  }
+
+  .stat-info span {
+    font-size: 12px;
+  }
+
+  .bottom-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .filters {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .filters input,
+  .filters select {
+    width: 100%;
+    min-width: 100%;
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+/* Móvil pequeño */
+@media (max-width: 420px) {
+  .topbar h1 {
+    font-size: 20px;
+  }
+
+  .topbar p {
+    font-size: 13px;
+  }
+
+  .stat-card {
+    padding: 14px;
+  }
+
+  .stat-info h3 {
+    font-size: 22px;
+  }
+}
