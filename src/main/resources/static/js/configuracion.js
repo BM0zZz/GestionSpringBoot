@@ -1,111 +1,216 @@
 /* =========================
-   CONFIGURACIÓN
+   CONFIGURACIÓN - SUPABASE
 ========================= */
 
-/* Configuración por defecto */
-const defaultSettings = {
-  adminName: "Víctor",
-  adminEmail: "victor.admin@vinilotfg.com",
-  adminRole: "Administrador principal",
+/* Cliente de Supabase */
+const supabaseConfigClient = window.supabaseClient;
+
+/* Preferencias por defecto del panel */
+const defaultPanelSettings = {
   theme: "Oscuro",
-  language: "Español",
-  notifyIncidents: true,
-  notifyOrders: true,
-  notifyStock: true
+  language: "Español"
 };
 
-/* Obtener configuración del localStorage */
-function getSettings() {
-  return JSON.parse(localStorage.getItem("panelSettings")) || defaultSettings;
+/* Perfil cargado desde Supabase */
+let perfilActual = null;
+
+/* Obtener preferencias del localStorage */
+function getPanelSettings() {
+  const saved = localStorage.getItem("panelSettings");
+
+  if (!saved) {
+    return defaultPanelSettings;
+  }
+
+  return {
+    ...defaultPanelSettings,
+    ...JSON.parse(saved)
+  };
 }
 
-/* Guardar configuración en localStorage */
-function saveSettings(settings) {
+/* Guardar preferencias en localStorage */
+function savePanelSettings(settings) {
   localStorage.setItem("panelSettings", JSON.stringify(settings));
+}
+
+/* Aplicar tema visual */
+function applyTheme(theme) {
+  if (theme === "Claro") {
+    document.body.classList.add("light-theme");
+  } else {
+    document.body.classList.remove("light-theme");
+  }
+}
+
+/*
+  Obtener texto traducido.
+  Usa t() si existe en i18n.js.
+*/
+function translateText(key) {
+  if (typeof t === "function") {
+    return t(key);
+  }
+
+  return key;
+}
+
+/*
+  Aplicar idioma.
+  Usa applyLanguage() si existe en i18n.js.
+*/
+function applyPanelLanguage(language) {
+  if (typeof applyLanguage === "function") {
+    applyLanguage(language);
+  }
+}
+
+/* Obtener usuario autenticado */
+async function getUsuarioActual() {
+  const { data, error } = await supabaseConfigClient.auth.getSession();
+
+  if (error) {
+    console.error("Error al obtener la sesión:", error);
+    return null;
+  }
+
+  return data.session?.user || null;
+}
+
+/* Cargar perfil del usuario actual desde Supabase */
+async function cargarPerfil() {
+  const usuarioActual = await getUsuarioActual();
+
+  if (!usuarioActual) {
+    alert("No se ha encontrado una sesión activa.");
+    window.location.href = "/login";
+    return;
+  }
+
+  /*
+    Importante:
+    perfiles.id debe coincidir con auth.users.id.
+    Así cargamos el perfil del usuario que ha iniciado sesión,
+    no el primer admin que encuentre.
+  */
+  const { data, error } = await supabaseConfigClient
+    .from("perfiles")
+    .select("*")
+    .eq("id", usuarioActual.id)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Error al cargar el perfil:", error);
+    alert(translateText("alerts.profileLoadError"));
+    return;
+  }
+
+  /*
+    Si no existe perfil para este usuario, lo creamos.
+    Esto evita que al registrar un nuevo usuario la configuración quede vacía.
+  */
+  if (!data) {
+    const nombrePorDefecto =
+      usuarioActual.user_metadata?.nombre ||
+      usuarioActual.user_metadata?.name ||
+      usuarioActual.email?.split("@")[0] ||
+      "Administrador";
+
+    const nuevoPerfil = {
+      id: usuarioActual.id,
+      nombre: nombrePorDefecto,
+      rol: "admin"
+    };
+
+    const { data: perfilCreado, error: crearError } = await supabaseConfigClient
+      .from("perfiles")
+      .insert([nuevoPerfil])
+      .select()
+      .single();
+
+    if (crearError) {
+      console.error("Error al crear el perfil:", crearError);
+      alert("Error al crear el perfil del usuario.");
+      return;
+    }
+
+    perfilActual = perfilCreado;
+  } else {
+    perfilActual = data;
+  }
+
+  renderSettings();
 }
 
 /* Renderizar datos en la UI */
 function renderSettings() {
-  const settings = getSettings();
+  const settings = getPanelSettings();
 
-  /* Inputs */
+  applyTheme(settings.theme);
+  applyPanelLanguage(settings.language);
+
+  const nombre = perfilActual?.nombre || "Sin nombre";
+  const rol = perfilActual?.rol || "Sin rol";
+
+  /* Inputs del perfil */
+  const profileId = document.getElementById("profileId");
   const adminName = document.getElementById("adminName");
-  const adminEmail = document.getElementById("adminEmail");
   const adminRole = document.getElementById("adminRole");
+
+  if (profileId) profileId.value = perfilActual?.id || "";
+  if (adminName) adminName.value = nombre;
+  if (adminRole) adminRole.value = rol;
+
+  /* Inputs de preferencias */
   const themeSelect = document.getElementById("themeSelect");
   const languageSelect = document.getElementById("languageSelect");
-  const notifyIncidents = document.getElementById("notifyIncidents");
-  const notifyOrders = document.getElementById("notifyOrders");
-  const notifyStock = document.getElementById("notifyStock");
 
-  /* Asignar valores */
-  if (adminName) adminName.value = settings.adminName;
-  if (adminEmail) adminEmail.value = settings.adminEmail;
-  if (adminRole) adminRole.value = settings.adminRole;
   if (themeSelect) themeSelect.value = settings.theme;
   if (languageSelect) languageSelect.value = settings.language;
-  if (notifyIncidents) notifyIncidents.checked = settings.notifyIncidents;
-  if (notifyOrders) notifyOrders.checked = settings.notifyOrders;
-  if (notifyStock) notifyStock.checked = settings.notifyStock;
 
-  /* Labels resumen */
+  /* Tarjetas superiores */
   const configUserName = document.getElementById("configUserName");
+  const configUserRole = document.getElementById("configUserRole");
+  const configRoleLabel = document.getElementById("configRoleLabel");
   const configThemeLabel = document.getElementById("configThemeLabel");
-  const configNotificationLabel = document.getElementById("configNotificationLabel");
+  const configLanguageLabel = document.getElementById("configLanguageLabel");
 
-  if (configUserName) configUserName.textContent = settings.adminName;
+  if (configUserName) configUserName.textContent = nombre;
+  if (configUserRole) configUserRole.textContent = rol;
+  if (configRoleLabel) configRoleLabel.textContent = rol;
   if (configThemeLabel) configThemeLabel.textContent = settings.theme;
+  if (configLanguageLabel) configLanguageLabel.textContent = settings.language;
 
-  /* Contar notificaciones activas */
-  const activeNotifications =
-    [settings.notifyIncidents, settings.notifyOrders, settings.notifyStock].filter(Boolean).length;
-
-  if (configNotificationLabel) {
-    configNotificationLabel.textContent = activeNotifications > 0 ? "Activadas" : "Desactivadas";
-  }
-
-  /* Render resumen */
-  renderConfigSummary(settings);
+  renderConfigSummary(settings, nombre, rol);
 }
 
 /* Crear resumen visual */
-function renderConfigSummary(settings) {
+function renderConfigSummary(settings, nombre, rol) {
   const container = document.getElementById("configSummaryBoxes");
   if (!container) return;
 
-  /* Texto de notificaciones */
-  const notificationsText =
-    `${settings.notifyIncidents ? "Incidencias" : ""}` +
-    `${settings.notifyIncidents && settings.notifyOrders ? ", " : ""}` +
-    `${settings.notifyOrders ? "Pedidos" : ""}` +
-    `${(settings.notifyIncidents || settings.notifyOrders) && settings.notifyStock ? ", " : ""}` +
-    `${settings.notifyStock ? "Stock" : ""}`;
+  const themeText = settings.language === "Inglés"
+    ? settings.theme === "Claro" ? "light mode" : "dark mode"
+    : settings.theme.toLowerCase();
 
-  /* Datos a mostrar */
   const boxes = [
     {
-      titulo: "Perfil activo",
-      texto: `${settings.adminName} · ${settings.adminRole}`
+      titulo: translateText("summary.activeProfile"),
+      texto: `${nombre} · ${rol}`
     },
     {
-      titulo: "Correo principal",
-      texto: settings.adminEmail
+      titulo: translateText("summary.currentRole"),
+      texto: `${translateText("summary.currentRoleText")} ${rol}.`
     },
     {
-      titulo: "Tema actual",
-      texto: `El panel está configurado en modo ${settings.theme.toLowerCase()}.`
+      titulo: translateText("summary.currentTheme"),
+      texto: `${translateText("summary.currentThemeText")} ${themeText}.`
     },
     {
-      titulo: "Idioma",
-      texto: `Idioma seleccionado: ${settings.language}.`
-    },
-    {
-      titulo: "Notificaciones",
-      texto: notificationsText || "No hay notificaciones activas."
+      titulo: translateText("summary.language"),
+      texto: `${translateText("summary.languageText")}: ${settings.language}.`
     }
   ];
 
-  /* Pintar cajas */
   container.innerHTML = boxes.map(item => `
     <div class="summary-item">
       <h4>${item.titulo}</h4>
@@ -119,15 +224,66 @@ function bindProfileForm() {
   const form = document.getElementById("profileForm");
   if (!form) return;
 
-  form.addEventListener("submit", function (e) {
+  form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const settings = getSettings();
-    settings.adminName = document.getElementById("adminName").value || defaultSettings.adminName;
-    settings.adminEmail = document.getElementById("adminEmail").value || defaultSettings.adminEmail;
-    settings.adminRole = document.getElementById("adminRole").value || defaultSettings.adminRole;
+    const usuarioActual = await getUsuarioActual();
 
-    saveSettings(settings);
+    if (!usuarioActual) {
+      alert("No se ha encontrado una sesión activa.");
+      window.location.href = "/login";
+      return;
+    }
+
+    const profileId = document.getElementById("profileId").value;
+    const nombre = document.getElementById("adminName").value.trim();
+    const rol = document.getElementById("adminRole").value;
+
+    if (!profileId) {
+      alert(translateText("alerts.profileNotFound"));
+      return;
+    }
+
+    /*
+      Seguridad extra:
+      evita actualizar otro perfil distinto al usuario logueado.
+    */
+    if (profileId !== usuarioActual.id) {
+      alert("No puedes modificar un perfil que no pertenece a tu sesión.");
+      return;
+    }
+
+    if (!nombre) {
+      alert(translateText("alerts.emptyName"));
+      return;
+    }
+
+    if (!rol) {
+      alert(translateText("alerts.emptyRole"));
+      return;
+    }
+
+    const perfilActualizado = {
+      nombre: nombre,
+      rol: rol
+    };
+
+    const { data, error } = await supabaseConfigClient
+      .from("perfiles")
+      .update(perfilActualizado)
+      .eq("id", profileId)
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Error al guardar el perfil:", error);
+      alert(translateText("alerts.profileSaveError"));
+      return;
+    }
+
+    perfilActual = data;
+
+    alert(translateText("alerts.profileSaved"));
     renderSettings();
   });
 }
@@ -140,66 +296,40 @@ function bindPreferencesForm() {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const settings = getSettings();
-    settings.theme = document.getElementById("themeSelect").value;
-    settings.language = document.getElementById("languageSelect").value;
+    const settings = {
+      theme: document.getElementById("themeSelect").value,
+      language: document.getElementById("languageSelect").value
+    };
 
-    saveSettings(settings);
+    savePanelSettings(settings);
+
+    applyTheme(settings.theme);
+    applyPanelLanguage(settings.language);
+
     renderSettings();
-    applyTheme(settings.theme); // aplicar tema
+
+    alert(translateText("alerts.preferencesSaved"));
   });
 }
 
-/* Formulario notificaciones */
-function bindNotificationsForm() {
-  const form = document.getElementById("notificationsForm");
-  if (!form) return;
+/* Cerrar sesión */
+async function logout() {
+  const { error } = await supabaseConfigClient.auth.signOut();
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
+  if (error) {
+    console.error("Error al cerrar sesión:", error);
+    alert(translateText("alerts.logoutError"));
+    return;
+  }
 
-    const settings = getSettings();
-    settings.notifyIncidents = document.getElementById("notifyIncidents").checked;
-    settings.notifyOrders = document.getElementById("notifyOrders").checked;
-    settings.notifyStock = document.getElementById("notifyStock").checked;
-
-    saveSettings(settings);
-    renderSettings();
-  });
-}
-
-/* Formulario seguridad */
-function bindSecurityForm() {
-  const form = document.getElementById("securityForm");
-  if (!form) return;
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const currentPassword = document.getElementById("currentPassword").value;
-    const newPassword = document.getElementById("newPassword").value;
-    const repeatPassword = document.getElementById("repeatPassword").value;
-
-    /* Validaciones */
-    if (!currentPassword || !newPassword || !repeatPassword) {
-      alert("Completa todos los campos de seguridad.");
-      return;
-    }
-
-    if (newPassword !== repeatPassword) {
-      alert("Las nuevas contraseñas no coinciden.");
-      return;
-    }
-
-    /* Simulación cambio contraseña */
-    alert("Contraseña actualizada correctamente.");
-    form.reset();
-  });
+  localStorage.removeItem("adminLoggedIn");
+  window.location.href = "/login";
 }
 
 /* INIT */
-renderSettings(); // cargar datos
-bindProfileForm(); // activar form perfil
-bindPreferencesForm(); // activar preferencias
-bindNotificationsForm(); // activar notificaciones
-bindSecurityForm(); // activar seguridad
+cargarPerfil();
+bindProfileForm();
+bindPreferencesForm();
+
+/* Hacer accesible logout desde el HTML */
+window.logout = logout;

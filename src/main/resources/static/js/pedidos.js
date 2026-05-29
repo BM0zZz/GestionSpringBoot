@@ -114,6 +114,19 @@ function getPedidoIdFromUrl() {
   return params.get("id");
 }
 
+/* Volver desde el detalle del pedido al origen correcto */
+function volverDesdeDetallePedido() {
+  const params = new URLSearchParams(window.location.search);
+  const origen = params.get("from");
+
+  if (origen === "dashboard") {
+    window.location.href = "/";
+    return;
+  }
+
+  window.location.href = "/pedidos";
+}
+
 /* Cargar usuarios desde Supabase */
 async function cargarUsuariosPedidos() {
   const { data, error } = await supabaseClient
@@ -181,8 +194,12 @@ function renderOrdersRecent() {
       <td><span class="${getPedidoStatusClass(pedido.estado)}">${pedido.estado || "-"}</span></td>
     `;
 
+    /*
+      Si se entra desde pedidos recientes del dashboard,
+      el botón volver del detalle debe regresar al dashboard.
+    */
     row.addEventListener("click", () => {
-      window.location.href = `/pedido-detalle?id=${pedido.id}`;
+      window.location.href = `/pedido-detalle?id=${pedido.id}&from=dashboard`;
     });
 
     ordersTableBody.appendChild(row);
@@ -217,8 +234,12 @@ function renderOrdersManagement(data) {
       <td><span class="${getPedidoStatusClass(pedido.estado)}">${pedido.estado || "-"}</span></td>
     `;
 
+    /*
+      Si se entra desde la sección de pedidos,
+      el botón volver del detalle debe regresar a /pedidos.
+    */
     row.addEventListener("click", () => {
-      window.location.href = `/pedido-detalle?id=${pedido.id}`;
+      window.location.href = `/pedido-detalle?id=${pedido.id}&from=pedidos`;
     });
 
     ordersManagementTableBody.appendChild(row);
@@ -373,6 +394,7 @@ function pintarDetallePedido(pedido) {
   if (detailOrderFecha) detailOrderFecha.textContent = formatFechaPedido(pedido.created_at);
   if (detailOrderTotal) detailOrderTotal.textContent = formatPrecio(pedido.total);
   if (detailOrderDireccion) detailOrderDireccion.textContent = pedido.direccion || "-";
+
   if (detailOrderPago) {
     detailOrderPago.textContent = pedido.tarjeta_last4
       ? `Tarjeta terminada en ${pedido.tarjeta_last4}`
@@ -534,5 +556,6 @@ if (orderStatusFilter) {
 
 cargarPedidoDetalle();
 
-/* Hacer accesible la función desde el botón del HTML */
+/* Hacer accesibles las funciones desde el HTML */
 window.guardarEstadoPedido = guardarEstadoPedido;
+window.volverDesdeDetallePedido = volverDesdeDetallePedido;

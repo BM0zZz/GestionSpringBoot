@@ -23,30 +23,30 @@
     <!-- Encabezado -->
     <header class="topbar">
       <div>
-        <h1>Gestión de clientes</h1>
-        <p>Consulta y gestiona los clientes registrados</p>
+        <h1 data-i18n="clients.title">Gestión de clientes</h1>
+        <p data-i18n="clients.subtitle">Consulta y gestiona los clientes registrados</p>
       </div>
     </header>
 
     <!-- Estadísticas -->
     <section class="stats-grid">
       <div class="stat-card">
-        <p>Clientes totales</p>
+        <p data-i18n="clients.totalClients">Clientes totales</p>
         <h3 id="totalClientes"></h3>
       </div>
 
       <div class="stat-card">
-        <p>Clientes activos</p>
+        <p data-i18n="clients.activeClients">Clientes activos</p>
         <h3 id="clientesActivos"></h3>
       </div>
 
       <div class="stat-card">
-        <p>Socios</p>
+        <p data-i18n="clients.members">Socios</p>
         <h3 id="clientesSocios"></h3>
       </div>
 
       <div class="stat-card">
-        <p>Nuevos este mes</p>
+        <p data-i18n="clients.newThisMonth">Nuevos este mes</p>
         <h3 id="clientesNuevosMes"></h3>
       </div>
     </section>
@@ -54,22 +54,22 @@
     <!-- Listado -->
     <section class="panel">
       <div class="panel-header">
-        <h2>Listado de clientes</h2>
+        <h2 data-i18n="clients.listTitle">Listado de clientes</h2>
       </div>
 
       <div class="filters">
-        <input type="text" id="searchCliente" placeholder="Buscar cliente...">
+        <input type="text" id="searchCliente" placeholder="Buscar cliente..." data-i18n-placeholder="clients.searchPlaceholder">
       </div>
 
       <div class="table-container">
         <table>
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>Nº socio</th>
-              <th>Nivel</th>
-              <th>Puntos disponibles</th>
+              <th data-i18n="clients.tableName">Nombre</th>
+              <th data-i18n="clients.tableEmail">Email</th>
+              <th data-i18n="clients.tableMemberNumber">Nº socio</th>
+              <th data-i18n="clients.tableLevel">Nivel</th>
+              <th data-i18n="clients.tableAvailablePoints">Puntos disponibles</th>
             </tr>
           </thead>
 
@@ -86,6 +86,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/js/supabase.js"></script>
 <script src="/js/shared.js"></script>
+<script src="/js/i18n.js"></script>
 <script src="/js/clientes.js"></script>
 
 </body>

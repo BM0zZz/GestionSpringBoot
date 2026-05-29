@@ -24,8 +24,8 @@
     <!-- Cabecera de la sección -->
     <header class="topbar">
       <div>
-        <h1>Gestión de pedidos</h1>
-        <p>Consulta, filtra y revisa los pedidos registrados en la tienda</p>
+        <h1 data-i18n="orders.title">Gestión de pedidos</h1>
+        <p data-i18n="orders.subtitle">Consulta, filtra y revisa los pedidos registrados en la tienda</p>
       </div>
     </header>
 
@@ -33,33 +33,33 @@
     <section class="stats-grid">
       <div class="stat-card">
         <div class="stat-info">
-          <p>Pedidos totales</p>
+          <p data-i18n="orders.totalOrders">Pedidos totales</p>
           <h3 id="totalPedidos">0</h3>
-          <span id="pedidosSemana">0 esta semana</span>
+          <span id="pedidosSemana" data-i18n="orders.thisWeek">0 esta semana</span>
         </div>
       </div>
 
       <div class="stat-card">
         <div class="stat-info">
-          <p>En preparación</p>
+          <p data-i18n="orders.inPreparation">En preparación</p>
           <h3 id="pedidosPreparacion">0</h3>
-          <span>Pedidos pendientes de gestionar</span>
+          <span data-i18n="orders.pendingToManage">Pedidos pendientes de gestionar</span>
         </div>
       </div>
 
       <div class="stat-card">
         <div class="stat-info">
-          <p>En camino</p>
+          <p data-i18n="orders.onTheWay">En camino</p>
           <h3 id="pedidosEnCamino">0</h3>
-          <span>Pedidos enviados al cliente</span>
+          <span data-i18n="orders.sentToCustomer">Pedidos enviados al cliente</span>
         </div>
       </div>
 
       <div class="stat-card">
         <div class="stat-info">
-          <p>Entregados</p>
+          <p data-i18n="orders.delivered">Entregados</p>
           <h3 id="pedidosEntregados">0</h3>
-          <span id="porcentajeEntregados">0% del total</span>
+          <span id="porcentajeEntregados" data-i18n="orders.totalPercentage">0% del total</span>
         </div>
       </div>
     </section>
@@ -68,22 +68,22 @@
     <section class="panel">
       <div class="panel-header">
         <div>
-          <h2>Listado de pedidos</h2>
-          <p>Haz clic en un pedido para ver su detalle</p>
+          <h2 data-i18n="orders.listTitle">Listado de pedidos</h2>
+          <p data-i18n="orders.listSubtitle">Haz clic en un pedido para ver su detalle</p>
         </div>
       </div>
 
       <!-- Filtros para buscar y clasificar pedidos -->
       <div class="filters">
-        <input type="text" id="searchOrder" placeholder="Buscar por ID, usuario o dirección...">
+        <input type="text" id="searchOrder" placeholder="Buscar por ID, usuario o dirección..." data-i18n-placeholder="orders.searchPlaceholder">
 
         <select id="orderStatusFilter">
-          <option value="all">Todos los estados</option>
-          <option value="En preparación">En preparación</option>
-          <option value="Procesando">Procesando</option>
-          <option value="En camino">En camino</option>
-          <option value="Entregado">Entregado</option>
-          <option value="Cancelado">Cancelado</option>
+          <option value="all" data-i18n="orders.allStatuses">Todos los estados</option>
+          <option value="En preparación" data-i18n="orders.statusPreparing">En preparación</option>
+          <option value="Procesando" data-i18n="orders.statusProcessing">Procesando</option>
+          <option value="En camino" data-i18n="orders.statusOnTheWay">En camino</option>
+          <option value="Entregado" data-i18n="orders.statusDelivered">Entregado</option>
+          <option value="Cancelado" data-i18n="orders.statusCancelled">Cancelado</option>
         </select>
       </div>
 
@@ -92,11 +92,11 @@
         <table>
           <thead>
             <tr>
-              <th>ID Pedido</th>
-              <th>Usuario</th>
-              <th>Fecha</th>
-              <th>Total</th>
-              <th>Estado</th>
+              <th data-i18n="orders.tableOrderId">ID Pedido</th>
+              <th data-i18n="orders.tableUser">Usuario</th>
+              <th data-i18n="orders.tableDate">Fecha</th>
+              <th data-i18n="orders.tableTotal">Total</th>
+              <th data-i18n="orders.tableStatus">Estado</th>
             </tr>
           </thead>
 
@@ -113,6 +113,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/js/supabase.js"></script>
 <script src="/js/shared.js"></script>
+<script src="/js/i18n.js"></script>
 <script src="/js/pedidos.js"></script>
 
 </body>

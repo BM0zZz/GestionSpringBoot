@@ -22,11 +22,11 @@
     <!-- Cabecera de la sección -->
     <header class="topbar">
       <div>
-        <h1>Gestión de productos</h1>
-        <p>Consulta, filtra y revisa el catálogo de vinilos</p>
+        <h1 data-i18n="products.title">Gestión de productos</h1>
+        <p data-i18n="products.subtitle">Consulta, filtra y revisa el catálogo de vinilos</p>
       </div>
 
-      <button class="primary-btn" onclick="window.location.href='/nuevo-producto'">
+      <button class="primary-btn" onclick="window.location.href='/nuevo-producto'" data-i18n="products.newProduct">
         + Nuevo producto
       </button>
     </header>
@@ -36,33 +36,33 @@
     <section class="stats-grid">
       <div class="stat-card">
         <div class="stat-info">
-          <p>Productos totales</p>
+          <p data-i18n="products.totalProducts">Productos totales</p>
           <h3 id="totalProductos"></h3>
-          <span>Catálogo actual</span>
+          <span data-i18n="products.currentCatalog">Catálogo actual</span>
         </div>
       </div>
 
       <div class="stat-card">
         <div class="stat-info">
-          <p>Stock bajo</p>
+          <p data-i18n="products.lowStock">Stock bajo</p>
           <h3 id="stockBajo"></h3>
-          <span>Menos de 5 unidades</span>
+          <span data-i18n="products.lessThanFive">Menos de 5 unidades</span>
         </div>
       </div>
 
       <div class="stat-card">
         <div class="stat-info">
-          <p>Sin stock</p>
+          <p data-i18n="products.noStock">Sin stock</p>
           <h3 id="sinStock"></h3>
-          <span>Productos agotados</span>
+          <span data-i18n="products.soldOutProducts">Productos agotados</span>
         </div>
       </div>
 
       <div class="stat-card">
         <div class="stat-info">
-          <p>Valor inventario</p>
+          <p data-i18n="products.inventoryValue">Valor inventario</p>
           <h3 id="valorInventario"></h3>
-          <span>Suma estimada</span>
+          <span data-i18n="products.estimatedSum">Suma estimada</span>
         </div>
       </div>
     </section>
@@ -71,20 +71,20 @@
     <section class="panel">
       <div class="panel-header">
         <div>
-          <h2>Listado de productos</h2>
-          <p>Haz clic en un producto para ver su detalle</p>
+          <h2 data-i18n="products.listTitle">Listado de productos</h2>
+          <p data-i18n="products.listSubtitle">Haz clic en un producto para ver su detalle</p>
         </div>
       </div>
 
       <!-- Filtros para buscar y clasificar productos -->
       <div class="filters">
-        <input type="text" id="searchProduct" placeholder="Buscar por nombre, artista o SKU...">
+        <input type="text" id="searchProduct" placeholder="Buscar por nombre, artista o SKU..." data-i18n-placeholder="products.searchPlaceholder">
 
         <select id="productStatusFilter">
-          <option value="all">Todos los estados</option>
-          <option value="Disponible">Disponible</option>
-          <option value="Stock bajo">Stock bajo</option>
-          <option value="Agotado">Agotado</option>
+          <option value="all" data-i18n="products.allStatuses">Todos los estados</option>
+          <option value="Disponible" data-i18n="products.statusAvailable">Disponible</option>
+          <option value="Stock bajo" data-i18n="products.statusLowStock">Stock bajo</option>
+          <option value="Agotado" data-i18n="products.statusSoldOut">Agotado</option>
         </select>
       </div>
 
@@ -93,17 +93,17 @@
         <table>
           <thead>
             <tr>
-              <th>SKU</th>
-              <th>Producto</th>
-              <th>Artista</th>
-              <th>Género</th>
-              <th>Categoría</th>
-              <th>Formato</th>
-              <th>Año</th>
-              <th>Tallas</th>
-              <th>Precio</th>
-              <th>Stock</th>
-              <th>Estado</th>
+              <th data-i18n="products.tableSku">SKU</th>
+              <th data-i18n="products.tableProduct">Producto</th>
+              <th data-i18n="products.tableArtist">Artista</th>
+              <th data-i18n="products.tableGenre">Género</th>
+              <th data-i18n="products.tableCategory">Categoría</th>
+              <th data-i18n="products.tableFormat">Formato</th>
+              <th data-i18n="products.tableYear">Año</th>
+              <th data-i18n="products.tableSizes">Tallas</th>
+              <th data-i18n="products.tablePrice">Precio</th>
+              <th data-i18n="products.tableStock">Stock</th>
+              <th data-i18n="products.tableStatus">Estado</th>
             </tr>
           </thead>
           <tbody id="productsTableBody"></tbody>
@@ -123,6 +123,7 @@
 
 <!-- Script compartido y lógica específica de productos -->
 <script src="/js/shared.js"></script>
+<script src="/js/i18n.js"></script>
 <script src="/js/productos.js"></script>
 
 </body>

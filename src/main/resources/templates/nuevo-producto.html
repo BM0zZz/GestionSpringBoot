@@ -20,8 +20,8 @@
 
       <header class="topbar">
         <div>
-          <h1>Nuevo producto</h1>
-          <p>Crear un nuevo producto en el catálogo</p>
+          <h1 data-i18n="newProduct.title">Nuevo producto</h1>
+          <p data-i18n="newProduct.subtitle">Crear un nuevo producto en el catálogo</p>
         </div>
       </header>
 
@@ -30,82 +30,82 @@
 
           <div class="form-grid">
             <div>
-              <label>Nombre</label>
+              <label data-i18n="newProduct.name">Nombre</label>
               <input type="text" id="nombre" required>
             </div>
 
             <div>
-              <label>SKU</label>
-              <input type="text" id="sku" placeholder="Ej: VIN-001" required>
+              <label data-i18n="newProduct.sku">SKU</label>
+              <input type="text" id="sku" placeholder="Ej: VIN-001" data-i18n-placeholder="newProduct.skuPlaceholder" required>
             </div>
 
             <div>
-              <label>Artista</label>
+              <label data-i18n="newProduct.artist">Artista</label>
               <input type="text" id="artista" required>
             </div>
 
             <div>
-              <label>Género</label>
+              <label data-i18n="newProduct.genre">Género</label>
               <input type="text" id="genero" required>
             </div>
 
             <div>
-              <label>Categoría</label>
+              <label data-i18n="newProduct.category">Categoría</label>
               <select id="categoria" required>
-                <option value="">Selecciona una categoría</option>
-                <option value="vinilo">Vinilo</option>
-                <option value="poster">Póster</option>
-                <option value="merch">Merchandising</option>
+                <option value="" data-i18n="newProduct.selectCategory">Selecciona una categoría</option>
+                <option value="vinilo" data-i18n="newProduct.categoryVinyl">Vinilo</option>
+                <option value="poster" data-i18n="newProduct.categoryPoster">Póster</option>
+                <option value="merch" data-i18n="newProduct.categoryMerch">Merchandising</option>
               </select>
             </div>
 
             <div>
-              <label>Formato</label>
+              <label data-i18n="newProduct.format">Formato</label>
               <select id="formato" required>
-                <option value="">Selecciona un formato</option>
+                <option value="" data-i18n="newProduct.selectFormat">Selecciona un formato</option>
                 <option value="LP">LP</option>
                 <option value="Póster">A3</option>
-                <option value="Ropa">Ropa</option>
+                <option value="Ropa" data-i18n="newProduct.formatClothing">Ropa</option>
               </select>
             </div>
 
             <div>
-              <label>Año</label>
-              <input type="number" id="anio" placeholder="Ej: 2024" required>
+              <label data-i18n="newProduct.year">Año</label>
+              <input type="number" id="anio" placeholder="Ej: 2024" data-i18n-placeholder="newProduct.yearPlaceholder" required>
             </div>
 
             <div>
-              <label>Tallas</label>
+              <label data-i18n="newProduct.sizes">Tallas</label>
               <select id="tallas">
-                <option value="">No aplica</option>
-                <option value="Única">Única</option>
+                <option value="" data-i18n="newProduct.notApplicable">No aplica</option>
+                <option value="Única" data-i18n="newProduct.oneSize">Única</option>
               </select>
             </div>
 
             <div>
-              <label>Precio</label>
+              <label data-i18n="newProduct.price">Precio</label>
               <input type="number" id="precio" step="0.01" min="0" required>
             </div>
 
             <div>
-              <label>Stock</label>
+              <label data-i18n="newProduct.stock">Stock</label>
               <input type="number" id="stock" min="0" required>
             </div>
 
             <div>
-              <label>Imagen del producto</label>
+              <label data-i18n="newProduct.productImage">Imagen del producto</label>
               <input type="file" id="imagen" accept="image/*">
             </div>
           </div>
 
           <div style="margin-top:24px;">
-            <label>Descripción</label>
+            <label data-i18n="newProduct.description">Descripción</label>
             <textarea id="descripcion" required></textarea>
           </div>
 
           <div class="form-actions">
-            <button type="submit" class="primary-btn">Crear producto</button>
-            <button type="button" class="secondary-btn" onclick="window.location.href='/productos'">Cancelar</button>
+            <button type="submit" class="primary-btn" data-i18n="newProduct.create">Crear producto</button>
+            <button type="button" class="secondary-btn" onclick="window.location.href='/productos'" data-i18n="newProduct.cancel">Cancelar</button>
           </div>
 
         </form>
@@ -118,6 +118,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/js/supabase.js"></script>
 <script src="/js/shared.js"></script>
+<script src="/js/i18n.js"></script>
 <script src="/js/nuevo-producto.js"></script>
 </body>
 

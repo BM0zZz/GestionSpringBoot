@@ -27,7 +27,7 @@
       <div class="detail-topbar">
         <div>
           <p class="breadcrumb">
-            <a href="/">Dashboard</a> / <a href="/pedidos">Pedidos</a> / Detalle
+            <a href="/" data-i18n="orderDetail.breadcrumbDashboard">Dashboard</a> / <a href="/pedidos" data-i18n="orderDetail.breadcrumbOrders">Pedidos</a> / <span data-i18n="orderDetail.breadcrumbDetail">Detalle</span>
           </p>
           <h1 id="orderTitle"></h1>
         </div>
@@ -35,22 +35,22 @@
         <!-- Acciones rápidas para actualizar estado o volver -->
         <div class="detail-actions-bar">
 
-          <button class="secondary-btn" type="button" onclick="window.location.href='/pedidos'">
+          <button class="secondary-btn" type="button" onclick="volverDesdeDetallePedido()" data-i18n="orderDetail.back">
             ← Volver
           </button>
 
           <div class="status-change-box">
-            <label for="pedidoEstadoSelect">Cambiar estado</label>
+            <label for="pedidoEstadoSelect" data-i18n="orderDetail.changeStatus">Cambiar estado</label>
             <select id="pedidoEstadoSelect">
-              <option value="En preparación">En preparación</option>
-              <option value="Procesando">Procesando</option>
-              <option value="En camino">En camino</option>
-              <option value="Entregado">Entregado</option>
-              <option value="Cancelado">Cancelado</option>
+              <option value="En preparación" data-i18n="orderDetail.statusPreparing">En preparación</option>
+              <option value="Procesando" data-i18n="orderDetail.statusProcessing">Procesando</option>
+              <option value="En camino" data-i18n="orderDetail.statusOnTheWay">En camino</option>
+              <option value="Entregado" data-i18n="orderDetail.statusDelivered">Entregado</option>
+              <option value="Cancelado" data-i18n="orderDetail.statusCancelled">Cancelado</option>
             </select>
           </div>
 
-          <button class="primary-btn" type="button" onclick="guardarEstadoPedido()">
+          <button class="primary-btn" type="button" onclick="guardarEstadoPedido()" data-i18n="orderDetail.saveStatus">
             Guardar estado
           </button>
 
@@ -62,28 +62,28 @@
 
         <!-- Panel con la información general del pedido -->
         <div class="panel">
-          <h2>Información del pedido</h2>
+          <h2 data-i18n="orderDetail.orderInformation">Información del pedido</h2>
 
           <!-- Datos principales del pedido -->
           <div class="detail-info-grid">
 
             <div class="detail-info-card">
-              <span>ID Pedido</span>
+              <span data-i18n="orderDetail.orderId">ID Pedido</span>
               <h3 id="detailOrderId"></h3>
             </div>
 
             <div class="detail-info-card">
-              <span>Usuario</span>
+              <span data-i18n="orderDetail.user">Usuario</span>
               <h3 id="detailOrderCliente"></h3>
             </div>
 
             <div class="detail-info-card">
-              <span>Fecha</span>
+              <span data-i18n="orderDetail.date">Fecha</span>
               <h3 id="detailOrderFecha"></h3>
             </div>
 
             <div class="detail-info-card">
-              <span>Total</span>
+              <span data-i18n="orderDetail.total">Total</span>
               <h3 id="detailOrderTotal"></h3>
             </div>
 
@@ -91,7 +91,7 @@
 
           <!-- Listado de productos incluidos en el pedido -->
           <div class="panel">
-            <h3>Productos del pedido</h3>
+            <h3 data-i18n="orderDetail.orderProducts">Productos del pedido</h3>
             <div id="orderProductsList"></div>
           </div>
 
@@ -99,41 +99,41 @@
           <div class="detail-meta-row">
 
             <div class="meta-item" id="pedidoEstadoBox">
-              <span>Estado</span>
+              <span data-i18n="orderDetail.status">Estado</span>
             </div>
 
             <div class="meta-item">
-              <span>Subtotal</span>
+              <span data-i18n="orderDetail.subtotal">Subtotal</span>
               <strong id="detailOrderSubtotal"></strong>
             </div>
 
             <div class="meta-item">
-              <span>Envío</span>
+              <span data-i18n="orderDetail.shipping">Envío</span>
               <strong id="detailOrderEnvio"></strong>
             </div>
 
             <div class="meta-item">
-              <span>Descuento</span>
+              <span data-i18n="orderDetail.discount">Descuento</span>
               <strong id="detailOrderDescuento"></strong>
             </div>
 
             <div class="meta-item">
-              <span>Método de envío</span>
+              <span data-i18n="orderDetail.shippingMethod">Método de envío</span>
               <strong id="detailOrderMetodoEnvio"></strong>
             </div>
 
             <div class="meta-item">
-              <span>Dirección</span>
+              <span data-i18n="orderDetail.address">Dirección</span>
               <strong id="detailOrderDireccion"></strong>
             </div>
 
             <div class="meta-item">
-              <span>Método de pago</span>
+              <span data-i18n="orderDetail.paymentMethod">Método de pago</span>
               <strong id="detailOrderPago"></strong>
             </div>
 
             <div class="meta-item">
-              <span>Incidencia asociada</span>
+              <span data-i18n="orderDetail.relatedIncident">Incidencia asociada</span>
               <strong id="detailOrderIncidencia"></strong>
             </div>
 
@@ -142,7 +142,7 @@
 
         <!-- Panel con el historial del pedido -->
         <div class="panel">
-          <h2>Historial</h2>
+          <h2 data-i18n="orderDetail.history">Historial</h2>
           <div id="orderTimelineContainer"></div>
         </div>
 
@@ -151,13 +151,13 @@
 
     <!-- Mensaje alternativo cuando no hay pedido seleccionado -->
     <div id="noOrderMessage" class="panel" style="display:none; max-width:700px;">
-      <h2 style="margin-bottom: 10px;">No hay ningún pedido seleccionado</h2>
+      <h2 style="margin-bottom: 10px;" data-i18n="orderDetail.noOrderTitle">No hay ningún pedido seleccionado</h2>
 
-      <p style="color:#a1a7b3; line-height:1.6; margin-bottom:20px;">
+      <p style="color:#a1a7b3; line-height:1.6; margin-bottom:20px;" data-i18n="orderDetail.noOrderText">
         Para ver el detalle de un pedido, vuelve al listado y haz clic sobre uno de la tabla.
       </p>
 
-      <button class="primary-btn" type="button" onclick="window.location.href='/pedidos'">
+      <button class="primary-btn" type="button" onclick="window.location.href='/pedidos'" data-i18n="orderDetail.goToOrders">
         Ir a pedidos
       </button>
     </div>
@@ -170,6 +170,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/js/supabase.js"></script>
 <script src="/js/shared.js"></script>
+<script src="/js/i18n.js"></script>
 <script src="/js/pedidos.js"></script>
 
 </body>

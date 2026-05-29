@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
-  <title>Detalle incidencia</title>
+  <title>Detalle incidencia - ViniloTFG Admin</title>
 
   <!-- Hojas de estilo -->
   <link rel="stylesheet" href="/css/global.css">
@@ -27,30 +28,32 @@
       <div class="detail-topbar">
         <div>
           <p class="breadcrumb">
-            <a href="/">Dashboard</a> / Incidencia
+            <a href="/" data-i18n="incidentDetail.breadcrumbDashboard">Dashboard</a> / <span data-i18n="incidentDetail.breadcrumbIncident">Incidencia</span>
           </p>
           <h1 id="incidentTitle"></h1>
         </div>
 
         <!-- Acciones -->
         <div class="detail-actions-bar">
+
+          <button class="secondary-btn" type="button" onclick="window.location.href='/'" data-i18n="incidentDetail.back">
+            ← Volver
+          </button>
+
           <div class="status-change-box">
-            <label for="estadoSelect">Cambiar estado</label>
+            <label for="estadoSelect" data-i18n="incidentDetail.changeStatus">Cambiar estado</label>
             <select id="estadoSelect">
-              <option value="Abierta">Abierta</option>
-              <option value="En revisión">En revisión</option>
-              <option value="Resuelta">Resuelta</option>
-              <option value="Cerrada">Cerrada</option>
+              <option value="Pendiente" data-i18n="incidentDetail.statusPending">Pendiente</option>
+              <option value="En revisión" data-i18n="incidentDetail.statusReview">En revisión</option>
+              <option value="Aprobada" data-i18n="incidentDetail.statusApproved">Aprobada</option>
+              <option value="Rechazada" data-i18n="incidentDetail.statusRejected">Rechazada</option>
             </select>
           </div>
 
-          <button class="secondary-btn" type="button" onclick="guardarEstado()">
+          <button class="primary-btn" type="button" onclick="guardarEstado()" data-i18n="incidentDetail.saveStatus">
             Guardar estado
           </button>
 
-          <button class="primary-btn" type="button" onclick="window.location.href='/'">
-            ← Volver
-          </button>
         </div>
       </div>
 
@@ -59,59 +62,82 @@
 
         <!-- Información -->
         <div class="panel">
-          <h2>Información</h2>
+          <h2 data-i18n="incidentDetail.information">Información</h2>
 
           <div class="detail-info-grid">
+
             <div class="detail-info-card">
-              <span>ID</span>
+              <span data-i18n="incidentDetail.id">ID</span>
               <h3 id="detailId"></h3>
             </div>
 
             <div class="detail-info-card">
-              <span>Cliente</span>
+              <span data-i18n="incidentDetail.customer">Cliente</span>
               <h3 id="detailCliente"></h3>
             </div>
 
             <div class="detail-info-card">
-              <span>Pedido</span>
+              <span data-i18n="incidentDetail.order">Pedido</span>
               <h3 id="detailPedido"></h3>
             </div>
 
             <div class="detail-info-card">
-              <span>Tipo</span>
+              <span data-i18n="incidentDetail.reason">Motivo</span>
               <h3 id="detailTipo"></h3>
             </div>
+
           </div>
 
           <div class="panel">
-            <h3>Descripción</h3>
+            <h3 data-i18n="incidentDetail.description">Descripción</h3>
             <p id="detailDescripcion"></p>
           </div>
 
           <div class="detail-meta-row">
+
             <div class="meta-item" id="priorityBox">
-              <span>Prioridad</span>
+              <span data-i18n="incidentDetail.reason">Motivo</span>
             </div>
 
             <div class="meta-item" id="statusBox">
-              <span>Estado</span>
+              <span data-i18n="incidentDetail.status">Estado</span>
             </div>
 
             <div class="meta-item">
-              <span>Fecha</span>
+              <span data-i18n="incidentDetail.date">Fecha</span>
               <strong id="detailFecha"></strong>
             </div>
 
             <div class="meta-item">
-              <span>Responsable</span>
+              <span data-i18n="incidentDetail.responsible">Responsable</span>
               <strong id="detailResponsable"></strong>
             </div>
+
+          </div>
+        </div>
+
+        <!-- Información del pedido asociado -->
+        <div class="panel">
+          <h2 data-i18n="incidentDetail.relatedOrder">Pedido asociado</h2>
+
+          <div class="detail-meta-row">
+
+            <div class="meta-item">
+              <span data-i18n="incidentDetail.orderTotal">Total pedido</span>
+              <strong id="detailOrderTotal"></strong>
+            </div>
+
+            <div class="meta-item">
+              <span data-i18n="incidentDetail.orderStatus">Estado pedido</span>
+              <strong id="detailOrderEstado"></strong>
+            </div>
+
           </div>
         </div>
 
         <!-- Historial -->
         <div class="panel">
-          <h2>Historial</h2>
+          <h2 data-i18n="incidentDetail.history">Historial</h2>
           <div id="timelineContainer"></div>
         </div>
 
@@ -120,11 +146,13 @@
 
     <!-- Mensaje si no hay incidencia -->
     <div id="noIncidentMessage" class="panel" style="display: none; max-width: 700px;">
-      <h2 style="margin-bottom: 10px;">No hay ninguna incidencia seleccionada</h2>
-      <p style="color:#a1a7b3; line-height:1.6; margin-bottom:20px;">
+      <h2 style="margin-bottom: 10px;" data-i18n="incidentDetail.noIncidentTitle">No hay ninguna incidencia seleccionada</h2>
+
+      <p style="color:#a1a7b3; line-height:1.6; margin-bottom:20px;" data-i18n="incidentDetail.noIncidentText">
         Para ver el detalle de una incidencia, vuelve al dashboard y haz clic sobre una incidencia de la tabla.
       </p>
-      <button class="primary-btn" type="button" onclick="window.location.href='/'">
+
+      <button class="primary-btn" type="button" onclick="window.location.href='/'" data-i18n="incidentDetail.goToDashboard">
         Ir al dashboard
       </button>
     </div>
@@ -137,6 +165,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/js/supabase.js"></script>
 <script src="/js/shared.js"></script>
+<script src="/js/i18n.js"></script>
 <script src="/js/incidencias.js"></script>
 
 </body>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <title>Configuración - ViniloTFG Admin</title>
@@ -15,6 +16,7 @@
 
 <div class="layout">
 
+  <!-- Sidebar reutilizable -->
   <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
   <!-- Contenido principal de la página -->
@@ -23,216 +25,159 @@
     <!-- Cabecera de la sección -->
     <header class="topbar">
       <div>
-        <h1>Configuración del sistema</h1>
-        <p>Gestiona tus preferencias, notificaciones y ajustes generales del panel</p>
+        <h1 data-i18n="config.title">Configuración del sistema</h1>
+        <p data-i18n="config.subtitle">Gestiona el perfil del administrador y las preferencias del panel</p>
       </div>
     </header>
 
     <!-- Tarjetas resumen con el estado actual de la configuración -->
     <section class="stats-grid">
+
       <div class="stat-card">
         <div class="stat-info">
-          <p>Usuario actual</p>
-          <h3 id="configUserName">Víctor</h3>
-          <span>Administrador principal</span>
+          <p data-i18n="cards.currentUser">Usuario actual</p>
+          <h3 id="configUserName">Cargando...</h3>
+          <span id="configUserRole">Administrador</span>
         </div>
       </div>
 
       <div class="stat-card">
         <div class="stat-info">
-          <p>Tema del panel</p>
+          <p data-i18n="cards.profileRole">Rol del perfil</p>
+          <h3 id="configRoleLabel">-</h3>
+          <span data-i18n="cards.panelPermissions">Permisos del panel</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-info">
+          <p data-i18n="cards.panelTheme">Tema del panel</p>
           <h3 id="configThemeLabel">Oscuro</h3>
-          <span>Configuración activa</span>
+          <span data-i18n="cards.visualConfig">Configuración visual</span>
         </div>
       </div>
 
       <div class="stat-card">
         <div class="stat-info">
-          <p>Notificaciones</p>
-          <h3 id="configNotificationLabel">Activadas</h3>
-          <span>Estado actual</span>
+          <p data-i18n="cards.language">Idioma</p>
+          <h3 id="configLanguageLabel">Español</h3>
+          <span data-i18n="cards.userPreference">Preferencia del usuario</span>
         </div>
       </div>
 
-      <div class="stat-card">
-        <div class="stat-info">
-          <p>Seguridad</p>
-          <h3>Alta</h3>
-          <span>Protección del acceso</span>
-        </div>
-      </div>
     </section>
 
     <!-- Bloque con formularios de perfil y preferencias -->
     <section class="bottom-grid">
+
+      <!-- Perfil del administrador -->
       <div class="panel">
         <div class="panel-header">
           <div>
-            <h2>Perfil del administrador</h2>
-            <p>Información principal del usuario del panel</p>
+            <h2 data-i18n="profile.title">Perfil del administrador</h2>
+            <p data-i18n="profile.subtitle">Información principal guardada en la tabla de perfiles</p>
           </div>
         </div>
 
-        <!-- Formulario para actualizar los datos del perfil -->
         <form id="profileForm">
+
+          <input type="hidden" id="profileId">
+
           <div class="form-grid">
+
             <div>
-              <label for="adminName">Nombre</label>
-              <input type="text" id="adminName" placeholder="Nombre del administrador">
+              <label for="adminName" data-i18n="profile.name">Nombre</label>
+              <input
+                type="text"
+                id="adminName"
+                placeholder="Nombre del administrador"
+                required
+              >
             </div>
 
             <div>
-              <label for="adminEmail">Correo electrónico</label>
-              <input type="email" id="adminEmail" placeholder="Correo">
+              <label for="adminRole" data-i18n="profile.role">Rol</label>
+              <select id="adminRole" required>
+                <option value="admin">admin</option>
+                <option value="editor">editor</option>
+                <option value="soporte">soporte</option>
+              </select>
             </div>
-          </div>
 
-          <div class="config-field-block">
-            <label for="adminRole">Cargo</label>
-            <input type="text" id="adminRole" placeholder="Rol en el sistema">
           </div>
 
           <div class="form-actions">
-            <button type="submit" class="primary-btn">Guardar perfil</button>
+            <button type="submit" class="primary-btn" data-i18n="profile.save">
+              Guardar perfil
+            </button>
           </div>
+
         </form>
       </div>
 
+      <!-- Preferencias del panel -->
       <div class="panel">
         <div class="panel-header">
           <div>
-            <h2>Preferencias del panel</h2>
-            <p>Ajustes visuales y de uso del backoffice</p>
+            <h2 data-i18n="preferences.title">Preferencias del panel</h2>
+            <p data-i18n="preferences.subtitle">Ajustes visuales y de uso del backoffice</p>
           </div>
         </div>
 
-        <!-- Formulario para modificar tema e idioma -->
         <form id="preferencesForm">
+
           <div class="config-field-block">
-            <label for="themeSelect">Tema</label>
+            <label for="themeSelect" data-i18n="preferences.theme">Tema</label>
+
             <select id="themeSelect">
-              <option value="Oscuro">Oscuro</option>
-              <option value="Claro">Claro</option>
+              <option value="Oscuro" data-i18n="preferences.dark">Oscuro</option>
+              <option value="Claro" data-i18n="preferences.light">Claro</option>
             </select>
           </div>
 
           <div class="config-field-block">
-            <label for="languageSelect">Idioma</label>
+            <label for="languageSelect" data-i18n="preferences.language">Idioma</label>
+
             <select id="languageSelect">
               <option value="Español">Español</option>
-              <option value="Inglés">Inglés</option>
+              <option value="Inglés">English</option>
             </select>
           </div>
 
           <div class="form-actions">
-            <button type="submit" class="primary-btn">Guardar preferencias</button>
-          </div>
-        </form>
-      </div>
-    </section>
-
-    <!-- Bloque con formularios de notificaciones y seguridad -->
-    <section class="bottom-grid">
-      <div class="panel">
-        <div class="panel-header">
-          <div>
-            <h2>Notificaciones</h2>
-            <p>Decide qué avisos quieres recibir en el panel</p>
-          </div>
-        </div>
-
-        <!-- Formulario para activar o desactivar avisos -->
-        <form id="notificationsForm">
-          <div class="notifications-list">
-
-            <label class="notification-option">
-              <div class="notification-option-left">
-                <input type="checkbox" id="notifyIncidents">
-                <span>Avisar de nuevas incidencias</span>
-              </div>
-              <small>Recibe avisos cuando se registre una nueva incidencia.</small>
-            </label>
-
-            <label class="notification-option">
-              <div class="notification-option-left">
-                <input type="checkbox" id="notifyOrders">
-                <span>Avisar de nuevos pedidos</span>
-              </div>
-              <small>Recibe avisos cuando entre un nuevo pedido en la tienda.</small>
-            </label>
-
-            <label class="notification-option">
-              <div class="notification-option-left">
-                <input type="checkbox" id="notifyStock">
-                <span>Avisar de stock bajo</span>
-              </div>
-              <small>Recibe avisos cuando un producto baje del stock recomendado.</small>
-            </label>
-
+            <button type="submit" class="primary-btn" data-i18n="preferences.save">
+              Guardar preferencias
+            </button>
           </div>
 
-          <div class="form-actions">
-            <button type="submit" class="primary-btn">Guardar notificaciones</button>
-          </div>
         </form>
       </div>
 
-      <div class="panel">
-        <div class="panel-header">
-          <div>
-            <h2>Seguridad</h2>
-            <p>Control básico del acceso y la sesión</p>
-          </div>
-        </div>
-
-        <!-- Formulario para actualizar la contraseña -->
-        <form id="securityForm">
-          <div class="config-field-block">
-            <label for="currentPassword">Contraseña actual</label>
-            <input type="password" id="currentPassword" placeholder="Introduce tu contraseña actual">
-          </div>
-
-          <div class="config-field-block">
-            <label for="newPassword">Nueva contraseña</label>
-            <input type="password" id="newPassword" placeholder="Nueva contraseña">
-          </div>
-
-          <div class="config-field-block">
-            <label for="repeatPassword">Repetir contraseña</label>
-            <input type="password" id="repeatPassword" placeholder="Repite la nueva contraseña">
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="primary-btn">Actualizar contraseña</button>
-          </div>
-        </form>
-      </div>
     </section>
 
     <!-- Resumen visual de los ajustes guardados -->
     <section class="panel">
       <div class="panel-header">
         <div>
-          <h2>Resumen de configuración</h2>
-          <p>Estado actual de los ajustes guardados</p>
+          <h2 data-i18n="summary.title">Resumen de configuración</h2>
+          <p data-i18n="summary.subtitle">Estado actual de los ajustes guardados</p>
         </div>
       </div>
 
       <div class="config-summary-grid" id="configSummaryBoxes"></div>
     </section>
 
-    <!-- BLOQUE DE SESIÓN (logout del usuario) -->
+    <!-- BLOQUE DE SESIÓN -->
     <section class="panel">
       <div class="panel-header">
         <div>
-          <h2>Sesión</h2>
-          <p>Cerrar sesión del panel de administración</p>
+          <h2 data-i18n="session.title">Sesión</h2>
+          <p data-i18n="session.subtitle">Cerrar sesión del panel de administración</p>
         </div>
       </div>
 
-      <!-- Botón que elimina la sesión del localStorage y redirige al login -->
       <div class="form-actions">
-        <button type="button" class="secondary-btn" onclick="logout()">
+        <button type="button" class="secondary-btn" onclick="logout()" data-i18n="session.logout">
           Cerrar sesión
         </button>
       </div>
@@ -246,6 +191,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/js/supabase.js"></script>
 <script src="/js/shared.js"></script>
+<script src="/js/i18n.js"></script>
 <script src="/js/configuracion.js"></script>
 
 </body>

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>ViniloTFG Admin - Incidencias</title>
 
   <!-- Hojas de estilo principales del sistema -->
@@ -10,185 +12,199 @@
   <link rel="stylesheet" href="/css/dashboard.css">
   <link rel="stylesheet" href="/css/theme.css">
 </head>
+
 <body>
-  <div class="layout">
-    
-    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="main-content">
-      
-      <!-- Cabecera del dashboard -->
-      <header class="topbar">
-        <div>
-          <h1>Dashboard de incidencias</h1>
-          <p>Resumen general de pedidos, incidencias y actividad reciente</p>
-        </div>
+<div class="layout">
 
-        <!-- Acción principal para crear una nueva incidencia -->
-        <div class="topbar-actions">
-          <button class="primary-btn" onclick="window.location.href='/nueva-incidencia'">
-                + Nueva incidencia
+  <!-- Sidebar reutilizable -->
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-content">
+
+    <!-- Cabecera del dashboard -->
+    <header class="topbar">
+      <div>
+        <h1 data-i18n="dashboard.title">Dashboard de incidencias</h1>
+        <p data-i18n="dashboard.subtitle">Resumen general de pedidos, incidencias y actividad reciente</p>
+      </div>
+
+      <!-- Acción principal para crear una nueva incidencia -->
+      <div class="topbar-actions">
+        <button class="primary-btn" type="button" onclick="window.location.href='/nueva-incidencia'" data-i18n="dashboard.newIncident">
+          + Nueva incidencia
         </button>
-        </div>
-      </header>
+      </div>
+    </header>
 
-      <!-- Tarjetas con resumen rápido de métricas -->
-      <section class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-info">
-            <p>Pedidos totales</p>
-            <h3>1.248</h3>
-            <span>+12% este mes</span>
-          </div>
-        </div>
+    <!-- Tarjetas con resumen rápido de métricas -->
+    <section class="stats-grid">
 
-        <div class="stat-card">
-          <div class="stat-info">
-            <p>Pedidos pendientes</p>
-            <h3>34</h3>
-            <span>5 requieren revisión</span>
-          </div>
+      <div class="stat-card">
+        <div class="stat-info">
+          <p data-i18n="dashboard.totalOrders">Pedidos totales</p>
+          <h3 id="dashboardTotalPedidos">0</h3>
+          <span id="dashboardPedidosMes" data-i18n="dashboard.ordersThisMonth">0 este mes</span>
         </div>
+      </div>
 
-        <div class="stat-card">
-          <div class="stat-info">
-            <p>Incidencias abiertas</p>
-            <h3>18</h3>
-            <span>4 son urgentes</span>
-          </div>
+      <div class="stat-card">
+        <div class="stat-info">
+          <p data-i18n="dashboard.pendingOrders">Pedidos pendientes</p>
+          <h3 id="dashboardPedidosPendientes">0</h3>
+          <span id="dashboardPedidosRevision" data-i18n="dashboard.ordersNeedReview">0 requieren revisión</span>
         </div>
+      </div>
 
-        <div class="stat-card">
-          <div class="stat-info">
-            <p>Clientes activos</p>
-            <h3>392</h3>
-            <span>+27 esta semana</span>
-          </div>
+      <div class="stat-card">
+        <div class="stat-info">
+          <p data-i18n="dashboard.openIncidents">Incidencias abiertas</p>
+          <h3 id="dashboardIncidenciasAbiertas">0</h3>
+          <span id="dashboardIncidenciasPendientes" data-i18n="dashboard.pendingIncidents">0 pendientes</span>
         </div>
-      </section>
+      </div>
 
-      <!-- BLOQUE DE GESTIÓN DE INCIDENCIAS -->
-      <section class="panel">
+      <div class="stat-card">
+        <div class="stat-info">
+          <p data-i18n="dashboard.activeCustomers">Clientes activos</p>
+          <h3 id="dashboardClientesActivos">0</h3>
+          <span id="dashboardClientesSemana" data-i18n="dashboard.customersThisWeek">0 esta semana</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- BLOQUE DE GESTIÓN DE INCIDENCIAS -->
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <h2 data-i18n="dashboard.incidentManagement">Gestión de incidencias</h2>
+          <p data-i18n="dashboard.incidentManagementSubtitle">Consulta, filtra y revisa las incidencias registradas</p>
+        </div>
+      </div>
+
+      <!-- Filtros para buscar y clasificar incidencias -->
+      <div class="filters">
+        <input type="text" id="searchIncident" placeholder="Buscar por cliente, pedido o ID..." data-i18n-placeholder="dashboard.searchIncidentPlaceholder">
+
+        <select id="statusFilter">
+          <option value="all" data-i18n="dashboard.allStatuses">Todos los estados</option>
+          <option value="Pendiente" data-i18n="dashboard.statusPending">Pendiente</option>
+          <option value="En revisión" data-i18n="dashboard.statusReview">En revisión</option>
+          <option value="Aprobada" data-i18n="dashboard.statusApproved">Aprobada</option>
+          <option value="Rechazada" data-i18n="dashboard.statusRejected">Rechazada</option>
+        </select>
+
+        <select id="priorityFilter">
+          <option value="all" data-i18n="dashboard.allReasons">Todos los motivos</option>
+          <option value="Talla/formato incorrecto" data-i18n="dashboard.reasonSizeFormat">Talla/formato incorrecto</option>
+          <option value="Llegó dañado" data-i18n="dashboard.reasonDamaged">Llegó dañado</option>
+          <option value="Producto incorrecto" data-i18n="dashboard.reasonWrongProduct">Producto incorrecto</option>
+          <option value="Retraso en el envío" data-i18n="dashboard.reasonShippingDelay">Retraso en el envío</option>
+          <option value="Otro" data-i18n="dashboard.reasonOther">Otro</option>
+        </select>
+      </div>
+
+      <!-- Tabla donde se cargan las incidencias dinámicamente -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="dashboard.tableId">ID</th>
+              <th data-i18n="dashboard.tableCustomer">Cliente</th>
+              <th data-i18n="dashboard.tableOrder">Pedido</th>
+              <th data-i18n="dashboard.tableReason">Motivo</th>
+              <th data-i18n="dashboard.tableStatus">Estado</th>
+              <th data-i18n="dashboard.tableDate">Fecha</th>
+            </tr>
+          </thead>
+
+          <tbody id="incidentTableBody">
+            <!-- Contenido generado por JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- BLOQUE DE PEDIDOS RECIENTES Y RESUMEN -->
+    <section class="bottom-grid">
+
+      <div class="panel">
         <div class="panel-header">
           <div>
-            <h2>Gestión de incidencias</h2>
-            <p>Consulta, filtra y revisa las incidencias registradas</p>
+            <h2 data-i18n="dashboard.recentOrders">Pedidos recientes</h2>
+            <p data-i18n="dashboard.recentOrdersSubtitle">Últimos pedidos registrados en la tienda</p>
           </div>
         </div>
 
-        <!-- Filtros para buscar y clasificar incidencias -->
-        <div class="filters">
-          <input type="text" id="searchIncident" placeholder="Buscar por cliente o ID..." />
-          
-          <select id="statusFilter">
-            <option value="all">Todos los estados</option>
-            <option value="Abierta">Abierta</option>
-            <option value="En revisión">En revisión</option>
-            <option value="Resuelta">Resuelta</option>
-            <option value="Cerrada">Cerrada</option>
-          </select>
-
-          <select id="priorityFilter">
-            <option value="all">Todas las prioridades</option>
-            <option value="Baja">Baja</option>
-            <option value="Media">Media</option>
-            <option value="Alta">Alta</option>
-            <option value="Urgente">Urgente</option>
-          </select>
-        </div>
-
-        <!-- Tabla donde se cargan las incidencias dinámicamente -->
+        <!-- Tabla con los últimos pedidos -->
         <div class="table-container">
           <table>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Cliente</th>
-                <th>Pedido</th>
-                <th>Tipo</th>
-                <th>Prioridad</th>
-                <th>Estado</th>
-                <th>Fecha</th>
+                <th data-i18n="dashboard.tableOrderId">ID Pedido</th>
+                <th data-i18n="dashboard.tableCustomer">Cliente</th>
+                <th data-i18n="dashboard.tableDate">Fecha</th>
+                <th data-i18n="dashboard.tableTotal">Total</th>
+                <th data-i18n="dashboard.tableStatus">Estado</th>
               </tr>
             </thead>
-            <tbody id="incidentTableBody">
+
+            <tbody id="ordersTableBody">
               <!-- Contenido generado por JavaScript -->
             </tbody>
           </table>
         </div>
-      </section>
+      </div>
 
-      <!-- BLOQUE DE PEDIDOS RECIENTES Y RESUMEN -->
-      <section class="bottom-grid">
-        <div class="panel">
-          <div class="panel-header">
-            <div>
-              <h2>Pedidos recientes</h2>
-              <p>Últimos pedidos registrados en la tienda</p>
-            </div>
-          </div>
-
-          <!-- Tabla con los últimos pedidos -->
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>ID Pedido</th>
-                  <th>Cliente</th>
-                  <th>Fecha</th>
-                  <th>Total</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody id="ordersTableBody">
-                <!-- Contenido generado por JavaScript -->
-              </tbody>
-            </table>
+      <!-- Panel de resumen rápido del sistema -->
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <h2 data-i18n="dashboard.quickSummary">Resumen rápido</h2>
+            <p data-i18n="dashboard.quickSummarySubtitle">Estado general de la operativa</p>
           </div>
         </div>
 
-        <!-- Panel de resumen rápido del sistema -->
-        <div class="panel">
-          <div class="panel-header">
-            <div>
-              <h2>Resumen rápido</h2>
-              <p>Estado general de la operativa</p>
-            </div>
+        <div class="summary-boxes">
+
+          <div class="summary-item">
+            <h4 data-i18n="dashboard.pendingIncidentsTitle">Incidencias pendientes</h4>
+            <p id="summaryIncidenciasPendientes" data-i18n="dashboard.pendingIncidentsText">0 solicitudes pendientes de revisión.</p>
           </div>
 
-          <div class="summary-boxes">
-            <div class="summary-item">
-              <h4>Incidencias urgentes</h4>
-              <p>4 casos pendientes de resolución inmediata.</p>
-            </div>
-
-            <div class="summary-item">
-              <h4>Pedidos con retraso</h4>
-              <p>7 envíos muestran demoras superiores a 48 horas.</p>
-            </div>
-
-            <div class="summary-item">
-              <h4>Devoluciones activas</h4>
-              <p>3 solicitudes siguen en proceso de validación.</p>
-            </div>
-
-            <div class="summary-item">
-              <h4>Clientes con incidencias repetidas</h4>
-              <p>2 usuarios han abierto más de una incidencia esta semana.</p>
-            </div>
+          <div class="summary-item">
+            <h4 data-i18n="dashboard.ordersInPreparationTitle">Pedidos en preparación</h4>
+            <p id="summaryPedidosPreparacion" data-i18n="dashboard.ordersInPreparationText">0 pedidos pendientes de preparar.</p>
           </div>
+
+          <div class="summary-item">
+            <h4 data-i18n="dashboard.ordersOnTheWayTitle">Pedidos en camino</h4>
+            <p id="summaryPedidosCamino" data-i18n="dashboard.ordersOnTheWayText">0 pedidos están actualmente en camino.</p>
+          </div>
+
+          <div class="summary-item">
+            <h4 data-i18n="dashboard.customersWithReturnsTitle">Clientes con devoluciones</h4>
+            <p id="summaryClientesDevoluciones" data-i18n="dashboard.customersWithReturnsText">0 clientes han abierto alguna devolución.</p>
+          </div>
+
         </div>
-      </section>
+      </div>
 
-    </main>
-  </div>
+    </section>
 
-  <!-- Scripts compartidos y específicos del dashboard -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/js/supabase.js"></script>
-  <script src="/js/shared.js"></script>
-  <script src="/js/incidencias.js"></script>
-  <script src="/js/pedidos.js"></script>
+  </main>
+
+</div>
+
+<!-- Scripts compartidos y específicos del dashboard -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/shared.js"></script>
+<script src="/js/i18n.js"></script>
+<script src="/js/incidencias.js"></script>
+<script src="/js/pedidos.js"></script>
+
 </body>
 </html>

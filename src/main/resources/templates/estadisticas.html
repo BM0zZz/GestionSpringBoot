@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <title>Estadísticas - ViniloTFG Admin</title>
@@ -14,6 +15,7 @@
 
 <div class="layout">
 
+  <!-- Sidebar reutilizable -->
   <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
   <!-- Contenido principal -->
@@ -22,53 +24,56 @@
     <!-- Encabezado de la sección -->
     <header class="topbar">
       <div>
-        <h1>Estadísticas generales</h1>
-        <p>Resumen del estado actual de la tienda, pedidos, incidencias y catálogo</p>
+        <h1 data-i18n="stats.title">Estadísticas generales</h1>
+        <p data-i18n="stats.subtitle">Resumen del estado actual de la tienda, pedidos, incidencias y catálogo</p>
       </div>
     </header>
 
     <!-- Tarjetas con métricas principales -->
     <section class="stats-grid">
+
       <div class="stat-card">
         <div class="stat-info">
-          <p>Pedidos totales</p>
-          <h3 id="statsPedidosTotales"></h3>
-          <span id="statsPedidosResumen"></span>
+          <p data-i18n="stats.totalOrders">Pedidos totales</p>
+          <h3 id="statsPedidosTotales">0</h3>
+          <span id="statsPedidosResumen" data-i18n="stats.loadingData">Cargando datos...</span>
         </div>
       </div>
 
       <div class="stat-card">
         <div class="stat-info">
-          <p>Incidencias abiertas</p>
-          <h3 id="statsIncidenciasAbiertas"></h3>
-          <span id="statsIncidenciasResumen"></span>
+          <p data-i18n="stats.openIncidents">Incidencias abiertas</p>
+          <h3 id="statsIncidenciasAbiertas">0</h3>
+          <span id="statsIncidenciasResumen" data-i18n="stats.loadingData">Cargando datos...</span>
         </div>
       </div>
 
       <div class="stat-card">
         <div class="stat-info">
-          <p>Clientes registrados</p>
-          <h3 id="statsClientesTotales"></h3>
-          <span id="statsClientesResumen"></span>
+          <p data-i18n="stats.registeredCustomers">Clientes registrados</p>
+          <h3 id="statsClientesTotales">0</h3>
+          <span id="statsClientesResumen" data-i18n="stats.loadingData">Cargando datos...</span>
         </div>
       </div>
 
       <div class="stat-card">
         <div class="stat-info">
-          <p>Productos en catálogo</p>
-          <h3 id="statsProductosTotales"></h3>
-          <span id="statsProductosResumen"></span>
+          <p data-i18n="stats.catalogProducts">Productos en catálogo</p>
+          <h3 id="statsProductosTotales">0</h3>
+          <span id="statsProductosResumen" data-i18n="stats.loadingData">Cargando datos...</span>
         </div>
       </div>
+
     </section>
 
     <!-- Bloque con resumen de estados de pedidos e incidencias -->
     <section class="bottom-grid">
+
       <div class="panel">
         <div class="panel-header">
           <div>
-            <h2>Estado de pedidos</h2>
-            <p>Distribución actual por estado</p>
+            <h2 data-i18n="stats.orderStatus">Estado de pedidos</h2>
+            <p data-i18n="stats.orderStatusSubtitle">Distribución actual por estado</p>
           </div>
         </div>
 
@@ -79,23 +84,25 @@
       <div class="panel">
         <div class="panel-header">
           <div>
-            <h2>Estado de incidencias</h2>
-            <p>Resumen actual del soporte</p>
+            <h2 data-i18n="stats.incidentStatus">Estado de incidencias</h2>
+            <p data-i18n="stats.incidentStatusSubtitle">Resumen actual del soporte y devoluciones</p>
           </div>
         </div>
 
         <!-- Contenedor dinámico de incidencias -->
         <div class="summary-boxes" id="incidentStatsBoxes"></div>
       </div>
+
     </section>
 
     <!-- Tablas con rankings de clientes y productos -->
     <section class="bottom-grid">
+
       <div class="panel">
         <div class="panel-header">
           <div>
-            <h2>Top clientes</h2>
-            <p>Clientes con más pedidos registrados</p>
+            <h2 data-i18n="stats.topCustomers">Top clientes</h2>
+            <p data-i18n="stats.topCustomersSubtitle">Clientes con más pedidos registrados</p>
           </div>
         </div>
 
@@ -104,11 +111,12 @@
           <table>
             <thead>
               <tr>
-                <th>Cliente</th>
-                <th>Pedidos</th>
-                <th>Incidencias</th>
+                <th data-i18n="stats.tableCustomer">Cliente</th>
+                <th data-i18n="stats.tableOrders">Pedidos</th>
+                <th data-i18n="stats.tableIncidents">Incidencias</th>
               </tr>
             </thead>
+
             <tbody id="topClientesTable"></tbody>
           </table>
         </div>
@@ -117,8 +125,8 @@
       <div class="panel">
         <div class="panel-header">
           <div>
-            <h2>Top productos</h2>
-            <p>Productos destacados por stock y catálogo</p>
+            <h2 data-i18n="stats.topProducts">Top productos</h2>
+            <p data-i18n="stats.topProductsSubtitle">Productos destacados por stock y catálogo</p>
           </div>
         </div>
 
@@ -127,23 +135,25 @@
           <table>
             <thead>
               <tr>
-                <th>Producto</th>
-                <th>Stock</th>
-                <th>Estado</th>
+                <th data-i18n="stats.tableProduct">Producto</th>
+                <th data-i18n="stats.tableStock">Stock</th>
+                <th data-i18n="stats.tableStatus">Estado</th>
               </tr>
             </thead>
+
             <tbody id="topProductosTable"></tbody>
           </table>
         </div>
       </div>
+
     </section>
 
     <!-- Resumen general del sistema -->
     <section class="panel">
       <div class="panel-header">
         <div>
-          <h2>Resumen operativo</h2>
-          <p>Indicadores generales del sistema</p>
+          <h2 data-i18n="stats.operationalSummary">Resumen operativo</h2>
+          <p data-i18n="stats.operationalSummarySubtitle">Indicadores generales del sistema</p>
         </div>
       </div>
 
@@ -159,6 +169,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/js/supabase.js"></script>
 <script src="/js/shared.js"></script>
+<script src="/js/i18n.js"></script>
 <script src="/js/estadisticas.js"></script>
 
 </body>

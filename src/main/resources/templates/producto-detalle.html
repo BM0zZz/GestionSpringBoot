@@ -22,21 +22,21 @@
       <div class="detail-topbar">
         <div>
           <p class="breadcrumb">
-            <a href="/">Dashboard</a> / <a href="/productos">Productos</a> / Detalle
+            <a href="/" data-i18n="productDetail.breadcrumbDashboard">Dashboard</a> / <a href="/productos" data-i18n="productDetail.breadcrumbProducts">Productos</a> / <span data-i18n="productDetail.breadcrumbDetail">Detalle</span>
           </p>
           <h1 id="productTitle"></h1>
         </div>
 
         <div class="detail-actions-bar">
-          <button class="secondary-btn" type="button" onclick="window.location.href='/productos'">
+          <button class="secondary-btn" type="button" onclick="window.location.href='/productos'" data-i18n="productDetail.back">
             ← Volver
           </button>
 
-          <button class="primary-btn" type="button" onclick="guardarCambiosProducto()">
+          <button class="primary-btn" type="button" onclick="guardarCambiosProducto()" data-i18n="productDetail.saveChanges">
             Guardar cambios
           </button>
 
-          <button class="secondary-btn" type="button" onclick="eliminarProducto()">
+          <button class="secondary-btn" type="button" onclick="eliminarProducto()" data-i18n="productDetail.deleteProduct">
             Eliminar producto
           </button>
         </div>
@@ -45,90 +45,90 @@
       <div class="detail-grid">
 
         <div class="panel">
-          <h2>Editar producto</h2>
+          <h2 data-i18n="productDetail.editProduct">Editar producto</h2>
 
           <form id="editProductForm">
             <div class="form-grid">
 
               <div>
-                <label>SKU</label>
+                <label data-i18n="productDetail.sku">SKU</label>
                 <input type="text" id="editProductSku" required>
               </div>
 
               <div>
-                <label>Nombre</label>
+                <label data-i18n="productDetail.name">Nombre</label>
                 <input type="text" id="editProductNombre" required>
               </div>
 
               <div>
-                <label>Artista</label>
+                <label data-i18n="productDetail.artist">Artista</label>
                 <input type="text" id="editProductArtista" required>
               </div>
 
               <div>
-                <label>Género</label>
+                <label data-i18n="productDetail.genre">Género</label>
                 <input type="text" id="editProductGenero" required>
               </div>
 
               <div>
-                <label>Categoría</label>
+                <label data-i18n="productDetail.category">Categoría</label>
                 <select id="editProductCategoria" required>
-                  <option value="">Selecciona una categoría</option>
-                  <option value="vinilo">Vinilo</option>
-                  <option value="poster">Póster</option>
-                  <option value="merch">Merchandising</option>
+                  <option value="" data-i18n="productDetail.selectCategory">Selecciona una categoría</option>
+                  <option value="vinilo" data-i18n="productDetail.categoryVinyl">Vinilo</option>
+                  <option value="poster" data-i18n="productDetail.categoryPoster">Póster</option>
+                  <option value="merch" data-i18n="productDetail.categoryMerch">Merchandising</option>
                 </select>
               </div>
 
               <div>
-                <label>Formato</label>
+                <label data-i18n="productDetail.format">Formato</label>
                 <select id="editProductFormato" required>
-                  <option value="">Selecciona un formato</option>
+                  <option value="" data-i18n="productDetail.selectFormat">Selecciona un formato</option>
                   <option value="LP">LP</option>
                   <option value="A3">A3</option>
-                  <option value="Ropa">Ropa</option>
+                  <option value="Ropa" data-i18n="productDetail.formatClothing">Ropa</option>
                 </select>
               </div>
 
               <div>
-                <label>Año</label>
-                <input type="number" id="editProductAnio" placeholder="Ej: 2024" required>
+                <label data-i18n="productDetail.year">Año</label>
+                <input type="number" id="editProductAnio" placeholder="Ej: 2024" data-i18n-placeholder="productDetail.yearPlaceholder" required>
               </div>
 
               <div>
-                <label>Tallas</label>
+                <label data-i18n="productDetail.sizes">Tallas</label>
                 <select id="editProductTallas">
-                  <option value="">No aplica</option>
-                  <option value="Única">Única</option>
+                  <option value="" data-i18n="productDetail.notApplicable">No aplica</option>
+                  <option value="Única" data-i18n="productDetail.oneSize">Única</option>
                 </select>
               </div>
 
               <div>
-                <label>Precio</label>
+                <label data-i18n="productDetail.price">Precio</label>
                 <input type="number" id="editProductPrecio" step="0.01" min="0" required>
               </div>
 
               <div>
-                <label>Stock</label>
+                <label data-i18n="productDetail.stock">Stock</label>
                 <input type="number" id="editProductStock" min="0" required>
               </div>
 
               <div>
-                <label>Nueva imagen</label>
+                <label data-i18n="productDetail.newImage">Nueva imagen</label>
                 <input type="file" id="editProductImagen" accept="image/*">
               </div>
 
             </div>
 
             <div style="margin-top:24px;">
-              <label>Descripción</label>
+              <label data-i18n="productDetail.description">Descripción</label>
               <textarea id="editProductDescripcion" required></textarea>
             </div>
           </form>
         </div>
 
         <div class="panel">
-          <h2>Vista previa</h2>
+          <h2 data-i18n="productDetail.preview">Vista previa</h2>
 
           <div style="margin-bottom:20px;">
             <img id="detailProductImage" src="" alt="Imagen del producto" style="width:180px; height:180px; object-fit:cover; border-radius:16px; border:1px solid #2a2f38;">
@@ -136,41 +136,41 @@
 
           <div class="detail-meta-row">
             <div class="meta-item">
-              <span>Precio</span>
+              <span data-i18n="productDetail.price">Precio</span>
               <strong id="detailProductPrecio"></strong>
             </div>
 
             <div class="meta-item">
-              <span>Stock</span>
+              <span data-i18n="productDetail.stock">Stock</span>
               <strong id="detailProductStock"></strong>
             </div>
 
             <div class="meta-item">
-              <span>Categoría</span>
+              <span data-i18n="productDetail.category">Categoría</span>
               <strong id="detailProductCategoria"></strong>
             </div>
 
             <div class="meta-item">
-              <span>Formato</span>
+              <span data-i18n="productDetail.format">Formato</span>
               <strong id="detailProductFormato"></strong>
             </div>
 
             <div class="meta-item">
-              <span>Año</span>
+              <span data-i18n="productDetail.year">Año</span>
               <strong id="detailProductAnio"></strong>
             </div>
 
             <div class="meta-item">
-              <span>Tallas</span>
+              <span data-i18n="productDetail.sizes">Tallas</span>
               <strong id="detailProductTallas"></strong>
             </div>
 
             <div class="meta-item" id="productStatusBox">
-              <span>Estado</span>
+              <span data-i18n="productDetail.status">Estado</span>
             </div>
 
             <div class="meta-item">
-              <span>Creado</span>
+              <span data-i18n="productDetail.created">Creado</span>
               <strong id="detailProductFecha"></strong>
             </div>
           </div>
@@ -180,11 +180,11 @@
     </div>
 
     <div id="noProductMessage" class="panel" style="display:none; max-width:700px;">
-      <h2 style="margin-bottom:10px;">No hay ningún producto seleccionado</h2>
-      <p style="color:#a1a7b3; line-height:1.6; margin-bottom:20px;">
+      <h2 style="margin-bottom:10px;" data-i18n="productDetail.noProductTitle">No hay ningún producto seleccionado</h2>
+      <p style="color:#a1a7b3; line-height:1.6; margin-bottom:20px;" data-i18n="productDetail.noProductText">
         Para ver el detalle de un producto, vuelve al listado y haz clic sobre uno de la tabla.
       </p>
-      <button class="primary-btn" type="button" onclick="window.location.href='/productos'">
+      <button class="primary-btn" type="button" onclick="window.location.href='/productos'" data-i18n="productDetail.goToProducts">
         Ir a productos
       </button>
     </div>
@@ -196,6 +196,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/js/supabase.js"></script>
 <script src="/js/shared.js"></script>
+<script src="/js/i18n.js"></script>
 <script src="/js/productos.js"></script>
 
 </body>
